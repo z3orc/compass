@@ -10,6 +10,8 @@ import (
 	"github.com/z3orc/dynamic-rpc/util"
 )
 
+var port string = util.GetPort()
+
 func main() {
 	router := mux.NewRouter()
 
@@ -35,5 +37,5 @@ func main() {
 	
 	//ASCII-banner on launch
 	util.Banner()
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Fatal(http.ListenAndServe(port, router))
 }
