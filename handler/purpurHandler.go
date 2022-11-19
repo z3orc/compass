@@ -17,20 +17,20 @@ func Purpur(w http.ResponseWriter, r *http.Request) {
 	url, err := purpur.GetDownloadUrl(id)
 	if err != nil {
 		util.Error(w, err)
-	}
+	} else {
+		if !strings.Contains(uri, "download"){
 
-	if !strings.Contains(uri, "download"){
-
-		// build, err := paper.GetLatestBuild(id)
-		// if err != nil {
-		// 	util.Error(w, err)
-		// }
-
-		version := & models.Version{
-			Url: url,
+			// build, err := paper.GetLatestBuild(id)
+			// if err != nil {
+			// 	util.Error(w, err)
+			// }
+	
+			version := & models.Version{
+				Url: url,
+			}
+			util.ReturnJson(w, r, *version)
 		}
-		util.ReturnJson(w, r, *version)
+	
+		http.Redirect(w, r, url, http.StatusTemporaryRedirect)
 	}
-
-	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
 }
