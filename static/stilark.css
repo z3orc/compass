@@ -1,0 +1,39 @@
+body {
+    display: flex;
+    margin: 0;
+    font-family: Segoe UI, monospace;
+    background-color: #1d2a40;
+}
+
+main {
+    width: 1100px;
+    margin: auto;
+    padding: 70px;
+    background-color: #1d2a40;
+    color: #fff;
+    font-size: large;
+    /* box-shadow: 0 0 20px #7de2d1; */
+    border-radius: 5px;
+}
+
+p {
+    margin: 25px 15px 25px 15px;
+}
+
+hr {
+    border: #fff solid 1px;
+}
+
+code {
+    background-color: #151f2f;
+    padding: 2px;
+    margin: 8px;
+}
+
+.notice {
+    text-align: center;
+    color: #fff;
+    font-size: small;
+    padding: 10px;
+    margin: 10px;
+}
