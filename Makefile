@@ -9,8 +9,8 @@ clean:
 build:
 	go mod tidy
 	go mod download
-	go build ./cmd/main.go
+	go build ./cmd/api/main.go
 
 docker:
-	docker build -t registry.gitlab.com/z3orc/dynamic-rpc .
+	docker build -t registry.gitlab.com/z3orc/dynamic-rpc ./build/api
 	docker push registry.gitlab.com/z3orc/dynamic-rpc

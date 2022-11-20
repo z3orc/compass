@@ -5,9 +5,9 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/z3orc/dynamic-rpc/handler"
-	"github.com/z3orc/dynamic-rpc/middleware"
-	"github.com/z3orc/dynamic-rpc/util"
+	"github.com/z3orc/dynamic-rpc/internal/http/handler"
+	"github.com/z3orc/dynamic-rpc/internal/http/middleware"
+	"github.com/z3orc/dynamic-rpc/internal/util"
 )
 
 var port string = util.GetPort()

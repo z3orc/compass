@@ -5,16 +5,16 @@ import (
 	"strings"
 
 	"github.com/gorilla/mux"
-	"github.com/z3orc/dynamic-rpc/lib/paper"
-	"github.com/z3orc/dynamic-rpc/models"
-	"github.com/z3orc/dynamic-rpc/util"
+	"github.com/z3orc/dynamic-rpc/internal/client/purpur"
+	"github.com/z3orc/dynamic-rpc/internal/models"
+	"github.com/z3orc/dynamic-rpc/internal/util"
 )
 
-func Paper(w http.ResponseWriter, r *http.Request) {
+func Purpur(w http.ResponseWriter, r *http.Request) {
 	id := mux.Vars(r)["id"]
 	uri := r.RequestURI
 
-	url, err := paper.GetDownloadUrl(id)
+	url, err := purpur.GetDownloadUrl(id)
 	if err != nil {
 		util.Error(w, err)
 	} else {
@@ -33,7 +33,4 @@ func Paper(w http.ResponseWriter, r *http.Request) {
 	
 		http.Redirect(w, r, url, http.StatusTemporaryRedirect)
 	}
-
-
-	
 }

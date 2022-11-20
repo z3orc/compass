@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/z3orc/dynamic-rpc/util"
+	"github.com/z3orc/dynamic-rpc/internal/util"
 )
 
 type Versions struct {

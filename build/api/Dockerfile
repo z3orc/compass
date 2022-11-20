@@ -1,7 +1,7 @@
 FROM golang:alpine AS build
 WORKDIR /app
 RUN apk add --no-cache make cmake 
-COPY . ./
+COPY ../ ./
 RUN make build
 
 FROM alpine:latest
