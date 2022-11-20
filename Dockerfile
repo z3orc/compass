@@ -1,8 +1,8 @@
 FROM golang:alpine AS build
 WORKDIR /app
+RUN apk add --no-cache make cmake 
 COPY . ./
-RUN go mod download
-RUN go build ./cmd/main.go
+RUN make build
 
 FROM alpine:latest
 WORKDIR /app
