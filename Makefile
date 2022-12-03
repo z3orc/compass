@@ -1,16 +1,25 @@
 # BUILD=$(shell git rev-list -1 HEAD)
 
 run:
-	go run .\cmd\main.go
+	go run .\cmd\api\main.go
 
 clean:
 	go mod tidy
 
-build:
+build-api:
 	go mod tidy
 	go mod download
 	go build ./cmd/api/main.go
 
+build-site:
+	go mod tidy
+	go mod download
+	go build ./cmd/web/main.go
+
+build-sync:
+	go mod tidy
+	go mod download
+	go build ./cmd/api/sync.go
+
 docker:
-	docker build -t registry.gitlab.com/z3orc/dynamic-rpc ./build/api
-	docker push registry.gitlab.com/z3orc/dynamic-rpc
+	docker compose push

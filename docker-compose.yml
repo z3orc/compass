@@ -1,0 +1,16 @@
+services:
+    web:
+        image: z3orc/dynamicweb
+        build:
+            context: ./
+            dockerfile: ./build/web/Dockerfile
+    api:
+        image: z3orc/dynamicrpc
+        build:
+            context: ./
+            dockerfile: ./build/api/Dockerfile
+    # sync:
+    #     image: z3orc/dynamicsync
+    #     build:
+    #         context: ./
+    #         dockerfile: ../backend.Dockerfile

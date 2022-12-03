@@ -36,6 +36,6 @@ func main() {
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
 	
 	//ASCII-banner on launch
-	util.Banner()
+	util.Banner("DynamicRPC")
 	log.Fatal(http.ListenAndServe(port, router))
 }
