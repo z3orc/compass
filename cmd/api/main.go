@@ -31,9 +31,6 @@ func main() {
 	s = router.PathPrefix("/purpur").Subrouter()
 	s.HandleFunc("/{id}", handler.Purpur)
 	s.HandleFunc("/{id}/download", handler.Purpur)
-
-	//Static index
-	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
 	
 	//ASCII-banner on launch
 	util.Banner("DynamicRPC")
