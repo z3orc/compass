@@ -25,10 +25,10 @@ func Purpur(w http.ResponseWriter, r *http.Request) {
 		case true:
 			http.Redirect(w, r, url, http.StatusTemporaryRedirect)
 		case false:
-			version := &models.Version{
+			version := models.Version{
 				Url: url,
 			}
-			util.ReturnJson(w, r, *version)
+			util.ReturnJson(w, r, version)
 		}
 
 	}

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/z3orc/dynamic-rpc/internal/models"
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
 
@@ -18,15 +19,14 @@ type Version struct {
 }
 
 type Build struct {
-	Version string
+	Version   string
 	Downloads struct {
 		Application struct {
-			Name string
+			Name   string
 			Sha256 string
 		}
 	}
 }
-
 
 func GetVersions() (Versions, error) {
 	resp, err := util.GetJson("https://api.papermc.io/v2/projects/paper")
@@ -44,7 +44,7 @@ func GetVersions() (Versions, error) {
 	return versions, nil
 }
 
-func GetVersion(version string) (Version, error){
+func GetVersion(version string) (Version, error) {
 	builds := Version{}
 	url := "https://api.papermc.io/v2/projects/paper/versions/" + version
 
@@ -66,25 +66,25 @@ func GetVersion(version string) (Version, error){
 	return builds, nil
 }
 
-func GetLatestBuild(id string) (string, error){
+func GetLatestBuild(id string) (string, error) {
 	version, err := GetVersion(id)
 	if err != nil {
 		return "", err
 	}
 	builds := version.Builds
 
-	latest := builds[len(builds) - 1]
+	latest := builds[len(builds)-1]
 	latestAsString := fmt.Sprintf("%v", latest)
 
 	return latestAsString, nil
 }
 
-func GetJarName(id string) (string, error){
+func GetJarName(id string) (string, error) {
 	latestBuild, err := GetLatestBuild(id)
 	if err != nil {
 		return "", err
 	}
-	url := fmt.Sprintf("https://api.papermc.io/v2/projects/paper/versions/%s/builds/%s",id,latestBuild)
+	url := fmt.Sprintf("https://api.papermc.io/v2/projects/paper/versions/%s/builds/%s", id, latestBuild)
 
 	resp, err := util.GetJson(url)
 	if err != nil {
@@ -101,7 +101,7 @@ func GetJarName(id string) (string, error){
 	return build.Downloads.Application.Name, nil
 }
 
-func GetDownloadUrl(id string) (string, error){
+func GetDownloadUrl(id string) (string, error) {
 	latestBuild, err := GetLatestBuild(id)
 	if err != nil {
 		return "", err
@@ -113,4 +113,11 @@ func GetDownloadUrl(id string) (string, error){
 	url := fmt.Sprintf("https://api.papermc.io/v2/projects/paper/versions/%s/builds/%s/downloads/%s", id, latestBuild, jarName)
 
 	return url, nil
+}
+
+func GetBuildInfo(id string) (models.Version, error) {
+	version := models.Version{
+		Url: "",
+	}
+	return version, nil
 }
