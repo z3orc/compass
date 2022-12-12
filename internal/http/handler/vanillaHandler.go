@@ -18,19 +18,17 @@ func Vanilla(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		util.Error(w, err)
 	} else {
-		if !strings.Contains(uri, "download"){
+		var isRedirect bool = strings.Contains(uri, "download")
 
-			// build, err := paper.GetLatestBuild(id)
-			// if err != nil {
-			// 	util.Error(w, err)
-			// }
-	
-			version := & models.Version{
+		switch isRedirect {
+		case true:
+			http.Redirect(w, r, url, http.StatusTemporaryRedirect)
+		case false:
+			version := &models.Version{
 				Url: url,
 			}
 			util.ReturnJson(w, r, *version)
 		}
-	
-		http.Redirect(w, r, url, http.StatusTemporaryRedirect)
+
 	}
 }
