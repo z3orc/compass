@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/z3orc/dynamic-rpc/internal/models"
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
 
@@ -16,6 +17,11 @@ type Version struct {
 	Builds Builds
 	Project string
 	Version string
+}
+
+type VersionInfo struct {
+    Version string
+    Md5 string
 }
 
 type Builds struct {
@@ -96,4 +102,34 @@ func GetDownloadUrl(id string) (string, error){
 	url := fmt.Sprint("https://api.purpurmc.org/v2/purpur/", id, "/", latestBuild, "/download" )
 
 	return url, nil
+}
+
+func GetFormatted(id string) (models.Version, error) {
+    latestBuildID, err := GetLatestBuild(id)
+    if err != nil{
+        return models.Version{}, err
+    }
+
+    url, err := GetDownloadUrl(id)
+    if err != nil {
+        return models.Version{}, err
+    }
+
+    latestBuildURL := fmt.Sprint("https://api.purpurmc.org/v2/purpur/", id, "/", latestBuildID)
+    latestBuild, err := util.GetJson(latestBuildURL)
+    if err != nil {
+        return models.Version{}, err
+    }
+
+    var latestBuildJSON = VersionInfo{}
+    json.Unmarshal(latestBuild, &latestBuildJSON)
+
+    version := models.Version{
+        Url: url,
+        Version: latestBuildJSON.Version,
+        ChecksumType: "md5",
+        Checksum: latestBuildJSON.Md5,
+    }
+
+    return version, nil
 }

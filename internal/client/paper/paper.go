@@ -79,6 +79,7 @@ func GetLatestBuild(id string) (string, error) {
 	return latestAsString, nil
 }
 
+
 func GetJarName(id string) (string, error) {
 	latestBuild, err := GetLatestBuild(id)
 	if err != nil {
@@ -115,9 +116,31 @@ func GetDownloadUrl(id string) (string, error) {
 	return url, nil
 }
 
-func GetBuildInfo(id string) (models.Version, error) {
-	version := models.Version{
-		Url: "",
+func GetFormatted(id string) (models.Version, error) {
+	latestBuild, err := GetLatestBuild(id)
+	if err != nil {
+		return models.Version{}, err
 	}
-	return version, nil
+	url := fmt.Sprintf("https://api.papermc.io/v2/projects/paper/versions/%s/builds/%s", id, latestBuild)
+
+	resp, err := util.GetJson(url)
+	if err != nil {
+		return models.Version{}, err
+	}
+
+	build := Build{}
+
+	err = json.Unmarshal(resp, &build)
+	if err != nil {
+		return models.Version{}, err
+	}
+
+    version := models.Version{
+        Version: build.Version,
+        Url: url,
+        ChecksumType: "sha256",
+        Checksum: build.Downloads.Application.Sha256,
+    }
+    
+    return version, nil
 }
