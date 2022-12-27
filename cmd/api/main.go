@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/z3orc/dynamic-rpc/internal/http/handler"
 	"github.com/z3orc/dynamic-rpc/internal/http/middleware"
+	"github.com/z3orc/dynamic-rpc/internal/http/routes"
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
 
@@ -18,19 +18,10 @@ func main() {
 	//Middleware
 	router.Use(middleware.Recover)
 	router.Use(middleware.Logger)
+	router.Use(middleware.Cache)
 
 	//Routes
-	s := router.PathPrefix("/vanilla").Subrouter()
-	s.HandleFunc("/{id}", handler.Vanilla)
-	s.HandleFunc("/{id}/download", handler.Vanilla)
-
-	s = router.PathPrefix("/paper").Subrouter()
-	s.HandleFunc("/{id}", handler.Paper)
-	s.HandleFunc("/{id}/download", handler.Paper)
-
-	s = router.PathPrefix("/purpur").Subrouter()
-	s.HandleFunc("/{id}", handler.Purpur)
-	s.HandleFunc("/{id}/download", handler.Purpur)
+	routes.Init(router)
 	
 	//ASCII-banner on launch
 	util.Banner("DynamicRPC")
