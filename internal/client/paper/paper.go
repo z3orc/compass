@@ -135,6 +135,11 @@ func GetFormatted(id string) (models.Version, error) {
 		return models.Version{}, err
 	}
 
+	url, err = GetDownloadUrl(id)
+	if err != nil {
+		return models.Version{}, err
+	}
+
     version := models.Version{
         Version: build.Version,
         Url: url,
