@@ -19,6 +19,6 @@ func Logger(next http.Handler) http.Handler {
         c.Body.WriteTo(w)
 
 		log.SetOutput(os.Stdout)
-		log.Print("| ", r.Method, " | ",  r.RemoteAddr, " | ", r.RequestURI,  " | ", c.Result().Status)
+		log.Print("| ", r.Method, " | ",  r.RemoteAddr, " | ", r.RequestURI,  " | ", c.Result().Status,  " | ", c.Header().Get("cached"))
 	})
 }
