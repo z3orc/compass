@@ -5,6 +5,7 @@ import (
 	"errors"
 	"log"
 
+	"github.com/z3orc/dynamic-rpc/internal/models"
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
 
@@ -21,6 +22,7 @@ type VersionInfo struct {
 
 type Version struct {
 	Downloads VersionDownloads
+	Id string
 }
 
 type VersionDownloads struct {
@@ -98,4 +100,25 @@ func GetDownloadUrl(id string) (string, error){
 	}
 
 	return url, nil
+}
+
+func GetFormatted(id string) (models.Version, error){
+	build, err := GetVersion(id)
+	if err != nil {
+		return models.Version{}, err
+	}
+
+	version := models.Version{
+		Url: build.Downloads.Server.Url,
+		Version: build.Id,
+		ChecksumType: "sha1",
+		Checksum: build.Downloads.Server.Sha1,
+	}
+
+	if version.Url == ""{
+		err := errors.New("404")
+		return models.Version{}, err
+	}
+
+	return version, nil
 }
