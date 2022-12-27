@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/z3orc/dynamic-rpc/internal/database"
 	"github.com/z3orc/dynamic-rpc/internal/models"
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
@@ -21,17 +22,30 @@ func Cache(next http.Handler) http.Handler {
 
 		identifier := fmt.Sprint(values[1], "-", values[2])
 
-		val, ok := cache[identifier]
-
-		if ok {
+		val, err := database.Client.Get(database.Ctx, identifier).Result()
+		if err != nil {
+			w.Header().Add("cached", "False")
+			next.ServeHTTP(w, r)
+		} else {
 			version := models.Version{
 				Url: val,
 			}
+
 			w.Header().Add("cached", "True")
 			util.ReturnJson(w, r, version)
-		} else {
-			w.Header().Add("cached", "False")
-			next.ServeHTTP(w, r)
 		}
+
+		// val, ok := cache[identifier]
+
+		// if ok {
+		// 	version := models.Version{
+		// 		Url: val,
+		// 	}
+		// 	w.Header().Add("cached", "True")
+		// 	util.ReturnJson(w, r, version)
+		// } else {
+		// 	w.Header().Add("cached", "False")
+		// 	next.ServeHTTP(w, r)
+		// }
 	})
 }
