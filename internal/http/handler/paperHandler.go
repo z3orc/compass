@@ -3,13 +3,13 @@ package handler
 import (
 	"net/http"
 
-	"github.com/gorilla/mux"
+	"github.com/go-chi/chi/v5"
 	"github.com/z3orc/dynamic-rpc/internal/client/paper"
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
 
 func PaperAsJson(w http.ResponseWriter, r *http.Request) {
-	id := mux.Vars(r)["id"]
+	id := chi.URLParam(r, "id")
 
     version, err := paper.GetFormatted(id)
     if err != nil {
@@ -21,7 +21,7 @@ func PaperAsJson(w http.ResponseWriter, r *http.Request) {
 }
 
 func PaperAsRedirect(w http.ResponseWriter, r *http.Request) {
-	id := mux.Vars(r)["id"]
+	id := chi.URLParam(r, "id")
 
     url, err := paper.GetDownloadUrl(id)
     if err != nil {
