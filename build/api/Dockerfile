@@ -8,5 +8,5 @@ FROM alpine:3.17
 WORKDIR /app
 COPY --from=build /app/main /app
 RUN chmod 0755 main
-EXPOSE 8080
+
 CMD [ "./main" ]

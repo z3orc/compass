@@ -9,5 +9,4 @@ WORKDIR /app
 COPY --from=build /app/main /app
 COPY --from=build /app/internal/static /app/static
 RUN chmod 0755 main
-EXPOSE 8080
 CMD [ "./main" ]
