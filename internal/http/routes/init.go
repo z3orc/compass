@@ -8,6 +8,8 @@ import (
 
 func Init(router *chi.Mux) {
 
+	router.Get("/", handler.Home)
+
 	router.Route("/vanilla", func(r chi.Router){
 		r.With(middleware.Cache).Get("/{id}", handler.VanillaAsJson)
 		r.With(middleware.Cache).Get("/{id}/download", handler.VanillaAsRedirect)
