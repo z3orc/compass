@@ -23,7 +23,6 @@ func main() {
 	router.Use(middleware.Recover)
 	router.Use(middleware.Logger)
 	router.Use(middleware.Cache)
-	// router.Use(middleware.ToCache)
 
 	//Routes
 	routes.Init(router)
