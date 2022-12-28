@@ -16,7 +16,6 @@ func main() {
 
 	//ASCII-banner on launch
 	util.Banner("DynamicRPC")
-	log.Print("Server listening on ", port, " 🚀")
 
 	//Init router
 	router := mux.NewRouter()
@@ -30,5 +29,6 @@ func main() {
 	routes.Init(router)
 	
 	//Init listener
+	log.Print("| Server listening on ", port, " 🚀")
 	log.Fatal(http.ListenAndServe(port, router))
 }
