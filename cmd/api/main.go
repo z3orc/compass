@@ -17,6 +17,7 @@ func main() {
 	//ASCII-banner on launch
 	util.Banner("DynamicRPC")
 
+	//Init router
 	router := mux.NewRouter()
 
 	//Middleware
@@ -27,6 +28,6 @@ func main() {
 	//Routes
 	routes.Init(router)
 	
-	//Init server
+	//Init listener
 	log.Fatal(http.ListenAndServe(port, router))
 }
