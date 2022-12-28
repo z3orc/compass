@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gorilla/mux"
+	"github.com/go-chi/chi/v5"
 	"github.com/z3orc/dynamic-rpc/internal/http/middleware"
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
@@ -12,14 +12,14 @@ import (
 var port string = util.GetPort()
 
 func main() {
-	router := mux.NewRouter()
+	router := chi.NewRouter()
 
 	//Middleware
 	router.Use(middleware.Recover)
 	router.Use(middleware.Logger)
 
 	//Static index
-	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
+	router.Handle("/*", http.FileServer(http.Dir("./internal/static")))
 	
 	//ASCII-banner on launch
 	util.Banner("DynamicWeb")
