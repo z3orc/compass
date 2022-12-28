@@ -13,6 +13,11 @@ import (
 var port string = util.GetPort()
 
 func main() {
+
+	//ASCII-banner on launch
+	util.Banner("DynamicRPC")
+
+	//Init router
 	router := mux.NewRouter()
 
 	//Middleware
@@ -23,7 +28,6 @@ func main() {
 	//Routes
 	routes.Init(router)
 	
-	//ASCII-banner on launch
-	util.Banner("DynamicRPC")
+	//Init listener
 	log.Fatal(http.ListenAndServe(port, router))
 }
