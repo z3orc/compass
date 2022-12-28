@@ -27,13 +27,13 @@ func Connect() (*redis.Client){
 	return client
 }
 
-// Check the state of a redis client
-func Check(client *redis.Client) bool {
-	_, err := client.Ping(RedisCtx).Result()
+// // Check the state of a redis client
+// func Check(client *redis.Client) bool {
+// 	_, err := client.Ping(RedisCtx).Result()
 
-	if(err != nil){
-		return false
-	} else {
-		return true
-	}
-}
+// 	if(err != nil){
+// 		return false
+// 	} else {
+// 		return true
+// 	}
+// }

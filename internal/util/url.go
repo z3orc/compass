@@ -15,7 +15,7 @@ func CheckUrl(url string) (error) {
 
 	if resp.StatusCode != 200 {
 		return errors.New(resp.Status)
-	} else {
-		return nil
-	}
+	} 
+
+	return nil
 }

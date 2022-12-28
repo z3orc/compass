@@ -60,9 +60,9 @@ func getFromDatabase(r *http.Request) (models.Version, error){
 			Version: val["version"],
 		}
 		return version, nil
-	} else {
-		return models.Version{}, errors.New("invalid result")
 	}
+	
+	return models.Version{}, errors.New("invalid result")
 
 }
 
