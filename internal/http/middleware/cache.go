@@ -28,7 +28,7 @@ func Cache(next http.Handler) http.Handler {
 				Body: []byte{},
 			}
 			next.ServeHTTP(c, r)
-			pushToDatabase(c, r)
+			go pushToDatabase(c, r)
 		} else {
 			w.Header().Add("cached", "True")
 			util.ReturnJson(w, r, cachedResult)
