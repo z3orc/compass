@@ -1,38 +1,38 @@
 package routes
 
 import (
-	"github.com/gorilla/mux"
+	"github.com/go-chi/chi/v5"
 	"github.com/z3orc/dynamic-rpc/internal/http/handler"
+	"github.com/z3orc/dynamic-rpc/internal/http/middleware"
 )
 
-// func Init(router *chi.Mux) {
-// 	router.Route("/vanilla", func(r chi.Router){
-// 		r.Get("/{id}", handler.VanillaAsJson)
-// 		r.Get("/{id}/download", handler.VanillaAsRedirect)
-// 	})
-// 	// s := router.PathPrefix("/vanilla").Subrouter()
-// 	// s.HandleFunc("/{id}", handler.VanillaAsJson)
-// 	// s.HandleFunc("/{id}/download", handler.VanillaAsRedirect)
+func Init(router *chi.Mux) {
+	router.Route("/vanilla", func(r chi.Router){
+		r.With(middleware.Cache).Get("/{id}", handler.VanillaAsJson)
+		r.With(middleware.Cache).Get("/{id}/download", handler.VanillaAsRedirect)
+	})
 
-// 	// s = router.PathPrefix("/paper").Subrouter()
-// 	// s.HandleFunc("/{id}", handler.PaperAsJson)
-// 	// s.HandleFunc("/{id}/download", handler.PaperAsRedirect)
+	router.Route("/paper", func(r chi.Router){
+		r.With(middleware.Cache).Get("/{id}", handler.PaperAsJson)
+		r.With(middleware.Cache).Get("/{id}/download", handler.PaperAsRedirect)
+	})
 
-// 	// s = router.PathPrefix("/purpur").Subrouter()
-// 	// s.HandleFunc("/{id}", handler.PurpurAsJson)
-// 	// s.HandleFunc("/{id}/download", handler.PurpurAsRedirect)
-// }
-
-func Init(router *mux.Router) {
-	s := router.PathPrefix("/vanilla").Subrouter()
-	s.HandleFunc("/{id}", handler.VanillaAsJson)
-	s.HandleFunc("/{id}/download", handler.VanillaAsRedirect)
-
-	s = router.PathPrefix("/paper").Subrouter()
-	s.HandleFunc("/{id}", handler.PaperAsJson)
-	s.HandleFunc("/{id}/download", handler.PaperAsRedirect)
-
-	s = router.PathPrefix("/purpur").Subrouter()
-	s.HandleFunc("/{id}", handler.PurpurAsJson)
-	s.HandleFunc("/{id}/download", handler.PurpurAsRedirect)
+	router.Route("/purpur", func(r chi.Router){
+		r.With(middleware.Cache).Get("/{id}", handler.PurpurAsJson)
+		r.With(middleware.Cache).Get("/{id}/download", handler.PurpurAsRedirect)
+	})
 }
+
+// func Init(router *chi.Router) {
+// 	s := router.PathPrefix("/vanilla").Subrouter()
+// 	s.HandleFunc("/{id}", handler.VanillaAsJson)
+// 	s.HandleFunc("/{id}/download", handler.VanillaAsRedirect)
+
+// 	s = router.PathPrefix("/paper").Subrouter()
+// 	s.HandleFunc("/{id}", handler.PaperAsJson)
+// 	s.HandleFunc("/{id}/download", handler.PaperAsRedirect)
+
+// 	s = router.PathPrefix("/purpur").Subrouter()
+// 	s.HandleFunc("/{id}", handler.PurpurAsJson)
+// 	s.HandleFunc("/{id}/download", handler.PurpurAsRedirect)
+// }
