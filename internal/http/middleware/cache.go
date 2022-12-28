@@ -4,13 +4,13 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"log"
 	"net/http"
-	"net/http/httptest"
 	"strings"
+	"time"
 
 	"github.com/z3orc/dynamic-rpc/internal/database"
+	"github.com/z3orc/dynamic-rpc/internal/http/recorder"
 	"github.com/z3orc/dynamic-rpc/internal/models"
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
@@ -20,10 +20,15 @@ func Cache(next http.Handler) http.Handler {
 
 		cachedResult, err := getFromDatabase(r)
 		if err != nil {
-			fmt.Println(err.Error())
 			w.Header().Add("cached", "False")
-			next.ServeHTTP(w, r)
-			pushToDatabase(next)
+
+			c := &recorder.ResponseRecorder{
+				ResponseWriter: w,
+				StatusCode: http.StatusOK,
+				Body: []byte{},
+			}
+			next.ServeHTTP(c, r)
+			pushToDatabase(c, r)
 		} else {
 			w.Header().Add("cached", "True")
 			util.ReturnJson(w, r, cachedResult)
@@ -44,10 +49,9 @@ func getFromDatabase(r *http.Request) (models.Version, error){
 		return models.Version{}, err
 	}
 
-	client.Close()
+	defer client.Close()
 
 	verified := verifyResult(val)
-	fmt.Println(verified)
 	if verified {
 		version := models.Version{
 			Url: val["url"],
@@ -62,41 +66,58 @@ func getFromDatabase(r *http.Request) (models.Version, error){
 
 }
 
-func pushToDatabase(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		c := httptest.NewRecorder()
-		next.ServeHTTP(c, r)
-		
-		for k, v := range c.Header() {
-            w.Header()[k] = v
-        }
+func pushToDatabase(c *recorder.ResponseRecorder, r *http.Request) {
+	if c.StatusCode == http.StatusOK{
+		values := strings.Split(r.RequestURI, "/")
 
-        w.WriteHeader(c.Code)
-        c.Body.WriteTo(w)
+		identifier := fmt.Sprint(values[1], "-", values[2])
 
-		fmt.Println(r.Response.StatusCode)
+		version := models.Version{}
 
-		if r.Response.StatusCode == http.StatusOK{
-			values := strings.Split(r.RequestURI, "/")
+		json.Unmarshal(c.Body, &version)
 
-			identifier := fmt.Sprint(values[1], "-", values[2])
-
-			version := models.Version{}
-
-			defer r.Body.Close()
-			body, err := io.ReadAll(r.Body)
-			if err != nil {
-				log.Print("Could not cache result")
-			}
-
-			json.Unmarshal(body, &version)
-
-			client := database.Connect()
-			client.HSet(database.RedisCtx,identifier, version)
-			client.Close()
-		}
-	})
+		client := database.Connect()
+		defer client.Close()
+		client.HSet(database.RedisCtx, identifier, "url", version.Url, "checksumtype", version.ChecksumType, "checksum", version.Checksum, "version", version.Version)
+		client.Expire(database.RedisCtx, identifier, 48*time.Hour)
+	}
 }
+
+// func pushToDatabase(next http.Handler) http.Handler {
+// 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+// 		c := httptest.NewRecorder()
+// 		next.ServeHTTP(c, r)
+		
+// 		for k, v := range c.Header() {
+//             w.Header()[k] = v
+//         }
+
+//         w.WriteHeader(c.Code)
+//         c.Body.WriteTo(w)
+
+// 		fmt.Println(r.Response.StatusCode)
+
+// 		if r.Response.StatusCode == http.StatusOK{
+// 			values := strings.Split(r.RequestURI, "/")
+
+// 			identifier := fmt.Sprint(values[1], "-", values[2])
+
+// 			version := models.Version{}
+
+// 			defer r.Body.Close()
+// 			body, err := io.ReadAll(r.Body)
+// 			if err != nil {
+// 				log.Print("Could not cache result")
+// 			}
+
+// 			json.Unmarshal(body, &version)
+
+// 			client := database.Connect()
+// 			client.HSet(database.RedisCtx,identifier, version)
+// 			client.Close()
+// 		}
+// 	})
+// }
 
 func verifyResult(result map[string]string) bool {
 
