@@ -19,7 +19,7 @@ func main() {
 	router.Use(middleware.Logger)
 
 	//Static index
-	router.Handle("/*", http.FileServer(http.Dir("./internal/static")))
+	router.Handle("/*", http.FileServer(http.Dir("./static")))
 	
 	//ASCII-banner on launch
 	util.Banner("DynamicWeb")
