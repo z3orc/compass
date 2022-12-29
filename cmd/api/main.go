@@ -8,7 +8,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/httprate"
 	"github.com/z3orc/dynamic-rpc/internal/env"
-	zmiddleware "github.com/z3orc/dynamic-rpc/internal/http/middleware"
+    "github.com/z3orc/dynamic-rpc/internal/http/middleware"
 	"github.com/z3orc/dynamic-rpc/internal/http/routes"
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
@@ -24,8 +24,8 @@ func main() {
 	router := chi.NewRouter()
 
 	//Middleware
-	router.Use(zmiddleware.Recover)
-	router.Use(zmiddleware.Logger)
+	router.Use(middleware.Recover)
+	router.Use(middleware.Logger)
 	router.Use(httprate.LimitByIP(
 		60,
 		60*time.Second,
