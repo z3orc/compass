@@ -10,6 +10,8 @@ import (
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
 
+const baseURL = "https://api.papermc.io/v2/projects/paper"
+
 type Versions struct {
 	Versions []string
 }
@@ -29,7 +31,7 @@ type Build struct {
 }
 
 func GetVersions() (Versions, error) {
-	resp, err := util.GetJson("https://api.papermc.io/v2/projects/paper")
+	resp, err := util.GetJson(baseURL)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -46,14 +48,14 @@ func GetVersions() (Versions, error) {
 
 func GetVersion(version string) (Version, error) {
 	builds := Version{}
-	url := "https://api.papermc.io/v2/projects/paper/versions/" + version
+    url := fmt.Sprintf("%s/versions/%s", baseURL, version)
 
 	err := util.CheckUrl(url)
 	if err != nil {
 		return builds, errors.New("404")
 	}
 
-	resp, err := util.GetJson("https://api.papermc.io/v2/projects/paper/versions/" + version)
+	resp, err := util.GetJson(url)
 	if err != nil {
 		return builds, err
 	}
@@ -85,7 +87,7 @@ func GetJarName(id string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	url := fmt.Sprintf("https://api.papermc.io/v2/projects/paper/versions/%s/builds/%s", id, latestBuild)
+    url := fmt.Sprintf("%s/versions/%s/builds/%s", baseURL, id, latestBuild)
 
 	resp, err := util.GetJson(url)
 	if err != nil {
@@ -111,8 +113,7 @@ func GetDownloadUrl(id string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	url := fmt.Sprintf("https://api.papermc.io/v2/projects/paper/versions/%s/builds/%s/downloads/%s", id, latestBuild, jarName)
-
+    url := fmt.Sprintf("%s/versions/%s/builds/%s/downloads/%s", baseURL, id, latestBuild, jarName)
 	return url, nil
 }
 
@@ -121,7 +122,7 @@ func GetFormatted(id string) (models.Version, error) {
 	if err != nil {
 		return models.Version{}, err
 	}
-	url := fmt.Sprintf("https://api.papermc.io/v2/projects/paper/versions/%s/builds/%s", id, latestBuild)
+    url := fmt.Sprintf("%s/versions/%s/builds/%s", baseURL, id, latestBuild)
 
 	resp, err := util.GetJson(url)
 	if err != nil {
