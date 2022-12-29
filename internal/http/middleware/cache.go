@@ -45,7 +45,7 @@ func getFromDatabase(r *http.Request) (models.Version, error){
 	client := database.Connect()
 	val, err := client.HGetAll(database.RedisCtx, identifier).Result()
 	if err != nil{
-		log.Print("Could not fetch from database")
+		log.Print("| Could not fetch from database")
 		return models.Version{}, err
 	}
 

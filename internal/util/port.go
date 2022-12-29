@@ -9,5 +9,5 @@ func GetPort() string{
 		return ":" + port
 	}
 
-	return ":8080"
+	return ":8000"
 }
