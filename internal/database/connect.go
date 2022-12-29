@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/z3orc/dynamic-rpc/internal/env"
 )
 
 var RedisCtx = context.Background()
@@ -18,9 +19,9 @@ func Connect() (*redis.Client){
 	// }
 
 	client := redis.NewClient(&redis.Options{
-        Addr:     fmt.Sprint(GetHost(), ":", GetPort()),
-		Username: GetUser(),
-        Password: GetPassword(), // no password set
+        Addr:     fmt.Sprint(env.RedisHost(), ":", env.RedisPort()),
+		Username: env.RedisUser(),
+        Password: env.RedisPassword(), // no password set
         DB:       0,  // use default DB
 		DialTimeout: 1*time.Second,
 		MaxRetries: -1,
