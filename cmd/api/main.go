@@ -17,7 +17,7 @@ var port string = util.GetPort()
 func main() {
 
 	//ASCII-banner on launch
-	util.Banner("DynamicRPC")
+	util.Banner("CompassAPI")
 
 	//Init router
 	router := chi.NewRouter()
