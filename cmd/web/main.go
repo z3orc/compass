@@ -24,7 +24,7 @@ func main() {
 	router.Use(middleware.Logger)
 
 	//Static index
-	router.Handle("/", http.FileServer(http.Dir("./static")))
+	router.Handle("/*", http.FileServer(http.Dir("./static")))
 	router.HandleFunc("/{flavour}/{id}", handler.Redirect)
 	
 
