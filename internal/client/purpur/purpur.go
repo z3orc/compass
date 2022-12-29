@@ -9,6 +9,8 @@ import (
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
 
+const baseURL = "https://api.purpurmc.org/v2/purpur"
+
 type Versions struct {
 	Versions []string
 }
@@ -33,7 +35,7 @@ type Builds struct {
 func GetVersions() (Versions, error) {
 	var versions Versions
 
-	resp, err := util.GetJson("https://api.purpurmc.org/v2/purpur")
+	resp, err := util.GetJson(baseURL)
 	if err != nil {
 		return versions, err
 	}
@@ -61,7 +63,7 @@ func GetVersion(id string) (Version, error){
 		currentId := versions.Versions[i]
 
 		if currentId == id {
-			url = fmt.Sprint("https://api.purpurmc.org/v2/purpur/",currentId)
+            url = fmt.Sprintf("%s/%s", baseURL, currentId)
 			break
 		}
 	}
@@ -99,7 +101,7 @@ func GetDownloadUrl(id string) (string, error){
 		return "", err
 	}
 
-	url := fmt.Sprint("https://api.purpurmc.org/v2/purpur/", id, "/", latestBuild, "/download" )
+    url := fmt.Sprintf("%s/%s/%s/download", baseURL, id, latestBuild)
 
 	return url, nil
 }
@@ -115,7 +117,8 @@ func GetFormatted(id string) (models.Version, error) {
         return models.Version{}, err
     }
 
-    latestBuildURL := fmt.Sprint("https://api.purpurmc.org/v2/purpur/", id, "/", latestBuildID)
+    latestBuildURL := fmt.Sprintf("%s/%s/%s", baseURL, id, latestBuildID)
+
     latestBuild, err := util.GetJson(latestBuildURL)
     if err != nil {
         return models.Version{}, err

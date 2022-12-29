@@ -9,6 +9,8 @@ import (
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
 
+const baseURL = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json"
+
 type Versions struct {
 	Latest   map[string]string
 	Versions []VersionInfo
@@ -36,7 +38,7 @@ type VersionDownloads struct {
 func GetVersions() (Versions, error){
 	versions := Versions{}
 
-	resp, err := util.GetJson("https://piston-meta.mojang.com/mc/game/version_manifest_v2.json")
+	resp, err := util.GetJson(baseURL)
 	if err != nil {
 		return versions, err
 	}
