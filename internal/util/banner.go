@@ -7,7 +7,7 @@ import (
 )
 
 func Banner(text string) {
-	banner := figure.NewColorFigure(text, "smslant", "cyan", true)
+	banner := figure.NewColorFigure(text, "smslant", "purple", true)
 	banner.Print()
-	fmt.Println("--------------------------------------------------v1.0.0-------")
+	fmt.Println("--------------------------------------------------v2.0.0-------")
 }
