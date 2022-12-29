@@ -18,7 +18,3 @@ func (rec *ResponseRecorder) Write(body []byte) (int, error) {
 	return rec.ResponseWriter.Write(body)
 }
 
-// func (rec *ResponseRecorder) Header(body []byte) (int, error) {
-// 	rec.Header = body
-// 	return rec.ResponseWriter.Write(body)
-// }

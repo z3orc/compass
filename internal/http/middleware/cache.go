@@ -83,42 +83,6 @@ func pushToDatabase(c *recorder.ResponseRecorder, r *http.Request) {
 	}
 }
 
-// func pushToDatabase(next http.Handler) http.Handler {
-// 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-// 		c := httptest.NewRecorder()
-// 		next.ServeHTTP(c, r)
-		
-// 		for k, v := range c.Header() {
-//             w.Header()[k] = v
-//         }
-
-//         w.WriteHeader(c.Code)
-//         c.Body.WriteTo(w)
-
-// 		fmt.Println(r.Response.StatusCode)
-
-// 		if r.Response.StatusCode == http.StatusOK{
-// 			values := strings.Split(r.RequestURI, "/")
-
-// 			identifier := fmt.Sprint(values[1], "-", values[2])
-
-// 			version := models.Version{}
-
-// 			defer r.Body.Close()
-// 			body, err := io.ReadAll(r.Body)
-// 			if err != nil {
-// 				log.Print("Could not cache result")
-// 			}
-
-// 			json.Unmarshal(body, &version)
-
-// 			client := database.Connect()
-// 			client.HSet(database.RedisCtx,identifier, version)
-// 			client.Close()
-// 		}
-// 	})
-// }
-
 func verifyResult(result map[string]string) bool {
 
 	if len(result) != 4 {
