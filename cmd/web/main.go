@@ -5,12 +5,13 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/z3orc/dynamic-rpc/internal/env"
 	"github.com/z3orc/dynamic-rpc/internal/http/handler"
 	"github.com/z3orc/dynamic-rpc/internal/http/middleware"
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
 
-var port string = util.GetPort()
+var port string = env.ListenerPort()
 
 func main() {
 	//ASCII-banner on launch
