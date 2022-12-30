@@ -18,6 +18,14 @@ import (
 func Cache(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
+		URI := r.RequestURI
+
+		//Skips cache
+		if strings.Contains(URI, "download"){
+			next.ServeHTTP(w, r)
+
+		}
+
 		cachedResult, err := getFromDatabase(r)
 		if err != nil {
 			w.Header().Add("cached", "False")
