@@ -26,6 +26,7 @@ func main() {
 	//Static index
 	router.Handle("/*", http.FileServer(http.Dir("./static")))
 	router.HandleFunc("/{flavour}/{id}", handler.Redirect)
+	router.HandleFunc("/{flavour}/{id}/download", handler.RedirectDownload)
 	
 
 	log.Fatal(http.ListenAndServe(port, router))
