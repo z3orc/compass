@@ -8,7 +8,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/httprate"
 	"github.com/z3orc/dynamic-rpc/internal/env"
-    "github.com/z3orc/dynamic-rpc/internal/http/middleware"
+    	"github.com/z3orc/dynamic-rpc/internal/http/middleware"
 	"github.com/z3orc/dynamic-rpc/internal/http/routes"
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
