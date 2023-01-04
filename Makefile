@@ -16,10 +16,10 @@ build-site:
 	go mod download
 	go build ./cmd/web/main.go
 
-build-sync:
-	go mod tidy
-	go mod download
-	go build ./cmd/api/sync.go
+# build-sync:
+# 	go mod tidy
+# 	go mod download
+# 	go build ./cmd/api/sync.go
 
 docker:
 	docker compose push
