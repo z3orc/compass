@@ -13,6 +13,12 @@ import (
 
 var port string = env.ListenerPort()
 
+func init() {
+    if env.APIURL() == "" {
+        log.Fatalln("API-url environment variable is not set, exiting.")
+    }
+}
+
 func main() {
 	//ASCII-banner on launch
 	util.Banner("CompassWeb")

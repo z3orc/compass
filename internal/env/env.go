@@ -58,9 +58,5 @@ func RedisPassword() string {
 func APIURL() string {
     url := os.Getenv("API")
 
-    if url == "" {
-        log.Panic("No API url provided, shutting down")
-    }
-
     return url
 }
