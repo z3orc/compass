@@ -5,9 +5,10 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/z3orc/dynamic-rpc/internal/env"
 )
 
-const baseURL = "https://api.compass.z3orc.com"
+var baseURL string = env.APIURL()
 
 func Redirect(w http.ResponseWriter, r *http.Request) {
 	flavour := chi.URLParam(r, "flavour")
