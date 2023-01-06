@@ -1,6 +1,9 @@
 package env
 
-import "os"
+import (
+	"log"
+	"os"
+)
 
 func ListenerPort() string{
 	port := os.Getenv("PORT")
@@ -50,4 +53,14 @@ func RedisPassword() string {
 	}
 
 	return ""
+}
+
+func APIURL() string {
+    url := os.Getenv("API")
+
+    if url == "" {
+        log.Panic("No API url provided, shutting down")
+    }
+
+    return url
 }
