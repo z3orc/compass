@@ -1,7 +1,7 @@
 # BUILD=$(shell git rev-list -1 HEAD)
 
 run:
-	go run .\cmd\api\main.go
+	go run ./cmd/api/main.go
 
 clean:
 	go mod tidy
