@@ -6,9 +6,8 @@ import (
 	"github.com/common-nighthawk/go-figure"
 )
 
-func Banner(text string) {
+func Banner(text string, version string, build string) {
 	banner := figure.NewColorFigure(text, "smslant", "purple", true)
-	version := "2.0.0"
 	banner.Print()
-	fmt.Printf("-----------------------------v%s--------\n", version)
+	fmt.Printf("--------------------------v%s %s----\n", version, build)
 }
