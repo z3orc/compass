@@ -21,6 +21,7 @@ func main() {
 
 	//ASCII-banner on launch
 	util.Banner("Compass", Version, Build)
+	time.Sleep(10000)
 
 	//Init router
 	router := chi.NewRouter()
