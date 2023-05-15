@@ -1,3 +1,3 @@
-# jar-compass🧭
+# compass🧭
 
-An easy and fast (⚡) way of downloading a specific Minecraft-server JAR!
+Fast and easy (⚡) way of downloading a specific Minecraft-server JAR!
