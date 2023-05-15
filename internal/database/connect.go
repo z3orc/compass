@@ -12,20 +12,20 @@ import (
 var RedisCtx = context.Background()
 
 // Connects & returns a redis client
-func Connect() (*redis.Client){
+func Connect() *redis.Client {
 	// url, err := redis.ParseURL("redis://localhost:6379")
 	// if err != nil {
 	// 	log.Println(err)
 	// }
 
 	client := redis.NewClient(&redis.Options{
-        Addr:     fmt.Sprint(env.RedisHost(), ":", env.RedisPort()),
-		Username: env.RedisUser(),
-        Password: env.RedisPassword(), // no password set
-        DB:       0,  // use default DB
-		DialTimeout: 1*time.Second,
-		MaxRetries: -1,
-    })
+		Addr:        fmt.Sprint(env.RedisHost(), ":", env.RedisPort()),
+		Username:    env.RedisUser(),
+		Password:    env.RedisPassword(), // no password set
+		DB:          0,                   // use default DB
+		DialTimeout: 1 * time.Second,
+		MaxRetries:  -1,
+	})
 
 	return client
 }

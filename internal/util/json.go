@@ -23,10 +23,10 @@ func GetJson(url string) ([]byte, error) {
 
 func ReturnJson(w http.ResponseWriter, req *http.Request, version models.Version) {
 	jsonBody, _ := json.Marshal(map[string]string{
-		"url": version.Url,
-        "version": version.Version,
-        "checksumType": version.ChecksumType,
-        "checksum": version.Checksum,
+		"url":          version.Url,
+		"version":      version.Version,
+		"checksumType": version.ChecksumType,
+		"checksum":     version.Checksum,
 	})
 
 	w.Header().Set("Content-Type", "application/json")

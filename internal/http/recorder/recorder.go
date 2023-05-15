@@ -5,7 +5,7 @@ import "net/http"
 type ResponseRecorder struct {
 	http.ResponseWriter
 	StatusCode int
-	Body []byte
+	Body       []byte
 }
 
 func (rec *ResponseRecorder) WriteHeader(statusCode int) {
@@ -17,4 +17,3 @@ func (rec *ResponseRecorder) Write(body []byte) (int, error) {
 	rec.Body = body
 	return rec.ResponseWriter.Write(body)
 }
-

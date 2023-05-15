@@ -21,7 +21,7 @@ func Cache(next http.Handler) http.Handler {
 		URI := r.RequestURI
 
 		//Skips cache
-		if strings.Contains(URI, "download"){
+		if strings.Contains(URI, "download") {
 			next.ServeHTTP(w, r)
 
 		}
@@ -32,8 +32,8 @@ func Cache(next http.Handler) http.Handler {
 
 			c := &recorder.ResponseRecorder{
 				ResponseWriter: w,
-				StatusCode: http.StatusOK,
-				Body: []byte{},
+				StatusCode:     http.StatusOK,
+				Body:           []byte{},
 			}
 			next.ServeHTTP(c, r)
 			go pushToDatabase(c, r)
@@ -45,14 +45,14 @@ func Cache(next http.Handler) http.Handler {
 	})
 }
 
-func getFromDatabase(r *http.Request) (models.Version, error){
+func getFromDatabase(r *http.Request) (models.Version, error) {
 	values := strings.Split(r.RequestURI, "/")
 
 	identifier := fmt.Sprint(values[1], "-", values[2])
 
 	client := database.Connect()
 	val, err := client.HGetAll(database.RedisCtx, identifier).Result()
-	if err != nil{
+	if err != nil {
 		log.Print("| Could not fetch from database")
 		return models.Version{}, err
 	}
@@ -62,20 +62,20 @@ func getFromDatabase(r *http.Request) (models.Version, error){
 	verified := verifyResult(val)
 	if verified {
 		version := models.Version{
-			Url: val["url"],
+			Url:          val["url"],
 			ChecksumType: val["checksumtype"],
-			Checksum: val["checksum"],
-			Version: val["version"],
+			Checksum:     val["checksum"],
+			Version:      val["version"],
 		}
 		return version, nil
 	}
-	
+
 	return models.Version{}, errors.New("invalid result")
 
 }
 
 func pushToDatabase(c *recorder.ResponseRecorder, r *http.Request) {
-	if c.StatusCode == http.StatusOK{
+	if c.StatusCode == http.StatusOK {
 		values := strings.Split(r.RequestURI, "/")
 
 		identifier := fmt.Sprint(values[1], "-", values[2])

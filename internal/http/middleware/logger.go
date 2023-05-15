@@ -13,12 +13,12 @@ func Logger(next http.Handler) http.Handler {
 
 		c := &recorder.ResponseRecorder{
 			ResponseWriter: w,
-			StatusCode: http.StatusOK,
+			StatusCode:     http.StatusOK,
 		}
 
 		next.ServeHTTP(c, r)
 
 		log.SetOutput(os.Stdout)
-		log.Print("| ", r.Method, " | ",  r.RemoteAddr, " | ", r.RequestURI,  " | ", c.StatusCode,  " | ", c.Header().Get("cached"), " |")
+		log.Print("| ", r.Method, " | ", r.RemoteAddr, " | ", r.RequestURI, " | ", c.StatusCode, " | ", c.Header().Get("cached"), " |")
 	})
 }

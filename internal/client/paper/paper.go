@@ -48,7 +48,7 @@ func GetVersions() (Versions, error) {
 
 func GetVersion(version string) (Version, error) {
 	builds := Version{}
-    url := fmt.Sprintf("%s/versions/%s", baseURL, version)
+	url := fmt.Sprintf("%s/versions/%s", baseURL, version)
 
 	err := util.CheckUrl(url)
 	if err != nil {
@@ -81,13 +81,12 @@ func GetLatestBuild(id string) (string, error) {
 	return latestAsString, nil
 }
 
-
 func GetJarName(id string) (string, error) {
 	latestBuild, err := GetLatestBuild(id)
 	if err != nil {
 		return "", err
 	}
-    url := fmt.Sprintf("%s/versions/%s/builds/%s", baseURL, id, latestBuild)
+	url := fmt.Sprintf("%s/versions/%s/builds/%s", baseURL, id, latestBuild)
 
 	resp, err := util.GetJson(url)
 	if err != nil {
@@ -113,7 +112,7 @@ func GetDownloadUrl(id string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-    url := fmt.Sprintf("%s/versions/%s/builds/%s/downloads/%s", baseURL, id, latestBuild, jarName)
+	url := fmt.Sprintf("%s/versions/%s/builds/%s/downloads/%s", baseURL, id, latestBuild, jarName)
 	return url, nil
 }
 
@@ -122,7 +121,7 @@ func GetFormatted(id string) (models.Version, error) {
 	if err != nil {
 		return models.Version{}, err
 	}
-    url := fmt.Sprintf("%s/versions/%s/builds/%s", baseURL, id, latestBuild)
+	url := fmt.Sprintf("%s/versions/%s/builds/%s", baseURL, id, latestBuild)
 
 	resp, err := util.GetJson(url)
 	if err != nil {
@@ -141,12 +140,12 @@ func GetFormatted(id string) (models.Version, error) {
 		return models.Version{}, err
 	}
 
-    version := models.Version{
-        Version: build.Version,
-        Url: url,
-        ChecksumType: "sha256",
-        Checksum: build.Downloads.Application.Sha256,
-    }
-    
-    return version, nil
+	version := models.Version{
+		Version:      build.Version,
+		Url:          url,
+		ChecksumType: "sha256",
+		Checksum:     build.Downloads.Application.Sha256,
+	}
+
+	return version, nil
 }

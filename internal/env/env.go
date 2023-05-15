@@ -4,7 +4,7 @@ import (
 	"os"
 )
 
-func ListenerPort() string{
+func ListenerPort() string {
 	port := os.Getenv("PORT")
 
 	if port != "" {
@@ -24,7 +24,7 @@ func RedisHost() string {
 	return "localhost"
 }
 
-func RedisPort() string{
+func RedisPort() string {
 	port := os.Getenv("REDISPORT")
 
 	if port != "" {
@@ -55,7 +55,7 @@ func RedisPassword() string {
 }
 
 func APIURL() string {
-    url := os.Getenv("API")
+	url := os.Getenv("API")
 
-    return url
+	return url
 }

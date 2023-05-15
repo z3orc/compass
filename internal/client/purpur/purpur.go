@@ -16,21 +16,20 @@ type Versions struct {
 }
 
 type Version struct {
-	Builds Builds
+	Builds  Builds
 	Project string
 	Version string
 }
 
 type VersionInfo struct {
-    Version string
-    Md5 string
+	Version string
+	Md5     string
 }
 
 type Builds struct {
-	All []string
+	All    []string
 	Latest string
 }
-
 
 func GetVersions() (Versions, error) {
 	var versions Versions
@@ -48,9 +47,9 @@ func GetVersions() (Versions, error) {
 	return versions, nil
 }
 
-func GetVersion(id string) (Version, error){
+func GetVersion(id string) (Version, error) {
 	var version Version
-	var url string;
+	var url string
 
 	versions, err := GetVersions()
 	if err != nil {
@@ -63,12 +62,12 @@ func GetVersion(id string) (Version, error){
 		currentId := versions.Versions[i]
 
 		if currentId == id {
-            url = fmt.Sprintf("%s/%s", baseURL, currentId)
+			url = fmt.Sprintf("%s/%s", baseURL, currentId)
 			break
 		}
 	}
 
-	if url == ""{
+	if url == "" {
 		err := errors.New("404")
 		return version, err
 	}
@@ -86,7 +85,7 @@ func GetVersion(id string) (Version, error){
 	return version, nil
 }
 
-func GetLatestBuild(id string) (string, error){
+func GetLatestBuild(id string) (string, error) {
 	version, err := GetVersion(id)
 	if err != nil {
 		return "", err
@@ -95,44 +94,44 @@ func GetLatestBuild(id string) (string, error){
 	return version.Builds.Latest, nil
 }
 
-func GetDownloadUrl(id string) (string, error){
+func GetDownloadUrl(id string) (string, error) {
 	latestBuild, err := GetLatestBuild(id)
 	if err != nil {
 		return "", err
 	}
 
-    url := fmt.Sprintf("%s/%s/%s/download", baseURL, id, latestBuild)
+	url := fmt.Sprintf("%s/%s/%s/download", baseURL, id, latestBuild)
 
 	return url, nil
 }
 
 func GetFormatted(id string) (models.Version, error) {
-    latestBuildID, err := GetLatestBuild(id)
-    if err != nil{
-        return models.Version{}, err
-    }
+	latestBuildID, err := GetLatestBuild(id)
+	if err != nil {
+		return models.Version{}, err
+	}
 
-    url, err := GetDownloadUrl(id)
-    if err != nil {
-        return models.Version{}, err
-    }
+	url, err := GetDownloadUrl(id)
+	if err != nil {
+		return models.Version{}, err
+	}
 
-    latestBuildURL := fmt.Sprintf("%s/%s/%s", baseURL, id, latestBuildID)
+	latestBuildURL := fmt.Sprintf("%s/%s/%s", baseURL, id, latestBuildID)
 
-    latestBuild, err := util.GetJson(latestBuildURL)
-    if err != nil {
-        return models.Version{}, err
-    }
+	latestBuild, err := util.GetJson(latestBuildURL)
+	if err != nil {
+		return models.Version{}, err
+	}
 
-    var latestBuildJSON = VersionInfo{}
-    json.Unmarshal(latestBuild, &latestBuildJSON)
+	var latestBuildJSON = VersionInfo{}
+	json.Unmarshal(latestBuild, &latestBuildJSON)
 
-    version := models.Version{
-        Url: url,
-        Version: latestBuildJSON.Version,
-        ChecksumType: "md5",
-        Checksum: latestBuildJSON.Md5,
-    }
+	version := models.Version{
+		Url:          url,
+		Version:      latestBuildJSON.Version,
+		ChecksumType: "md5",
+		Checksum:     latestBuildJSON.Md5,
+	}
 
-    return version, nil
+	return version, nil
 }

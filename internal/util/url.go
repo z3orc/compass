@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func CheckUrl(url string) (error) {
+func CheckUrl(url string) error {
 
 	resp, err := http.Get(url)
 	if err != nil {
@@ -15,7 +15,7 @@ func CheckUrl(url string) (error) {
 
 	if resp.StatusCode != 200 {
 		return errors.New(resp.Status)
-	} 
+	}
 
 	return nil
 }

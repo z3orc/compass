@@ -17,25 +17,25 @@ type Versions struct {
 }
 
 type VersionInfo struct {
-	Id string
+	Id   string
 	Type string
-	Url string
+	Url  string
 }
 
 type Version struct {
 	Downloads VersionDownloads
-	Id string
+	Id        string
 }
 
 type VersionDownloads struct {
 	Server struct {
 		Sha1 string
 		Size int32
-		Url string
+		Url  string
 	}
 }
 
-func GetVersions() (Versions, error){
+func GetVersions() (Versions, error) {
 	versions := Versions{}
 
 	resp, err := util.GetJson(baseURL)
@@ -47,13 +47,13 @@ func GetVersions() (Versions, error){
 	if err != nil {
 		return versions, err
 	}
-	
+
 	return versions, nil
 }
 
-func GetVersion(id string) (Version, error){
+func GetVersion(id string) (Version, error) {
 	var version Version
-	var url string;
+	var url string
 
 	versions, err := GetVersions()
 	if err != nil {
@@ -71,7 +71,7 @@ func GetVersion(id string) (Version, error){
 		}
 	}
 
-	if url == ""{
+	if url == "" {
 		err := errors.New("404")
 		return version, err
 	}
@@ -89,14 +89,14 @@ func GetVersion(id string) (Version, error){
 	return version, nil
 }
 
-func GetDownloadUrl(id string) (string, error){
+func GetDownloadUrl(id string) (string, error) {
 	version, err := GetVersion(id)
 	if err != nil {
 		return "", err
 	}
 
 	url := version.Downloads.Server.Url
-	if url == ""{
+	if url == "" {
 		err := errors.New("404")
 		return url, err
 	}
@@ -104,20 +104,20 @@ func GetDownloadUrl(id string) (string, error){
 	return url, nil
 }
 
-func GetFormatted(id string) (models.Version, error){
+func GetFormatted(id string) (models.Version, error) {
 	build, err := GetVersion(id)
 	if err != nil {
 		return models.Version{}, err
 	}
 
 	version := models.Version{
-		Url: build.Downloads.Server.Url,
-		Version: build.Id,
+		Url:          build.Downloads.Server.Url,
+		Version:      build.Id,
 		ChecksumType: "sha1",
-		Checksum: build.Downloads.Server.Sha1,
+		Checksum:     build.Downloads.Server.Sha1,
 	}
 
-	if version.Url == ""{
+	if version.Url == "" {
 		err := errors.New("404")
 		return models.Version{}, err
 	}
