@@ -13,14 +13,12 @@ import (
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
 
-var Version string = "0.0.0"
-var Build string = "0000000"
 var port string = env.ListenerPort()
 
 func main() {
 
 	//ASCII-banner on launch
-	util.Banner("Compass", Version, Build)
+	util.Banner("Compass", env.Version, env.Build)
 	time.Sleep(10000)
 
 	//Init router
