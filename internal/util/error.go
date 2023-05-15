@@ -10,5 +10,5 @@ func Error(writer http.ResponseWriter, err error) {
 	} else {
 		http.Error(writer, "400 Bad Request -- Could not process request", http.StatusBadRequest)
 	}
-	
+
 }
