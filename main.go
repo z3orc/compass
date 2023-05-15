@@ -13,8 +13,8 @@ import (
 	"github.com/z3orc/dynamic-rpc/internal/util"
 )
 
-var Version string = ""
-var Build string = ""
+var Version string = "0.0.0"
+var Build string = "0000000"
 var port string = env.ListenerPort()
 
 func main() {
