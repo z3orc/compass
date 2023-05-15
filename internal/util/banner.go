@@ -8,6 +8,7 @@ import (
 
 func Banner(text string) {
 	banner := figure.NewColorFigure(text, "smslant", "purple", true)
+	version := "2.0.0"
 	banner.Print()
-	fmt.Println("--------------------------------------------------v2.0.0-------")
+	fmt.Printf("-----------------------------v%s--------\n", version)
 }
