@@ -4,6 +4,9 @@ import (
 	"os"
 )
 
+var Version string = "0.0.0"
+var Build string = "0000000"
+
 func ListenerPort() string {
 	port := os.Getenv("PORT")
 
