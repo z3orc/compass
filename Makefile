@@ -15,6 +15,9 @@ clean:
 build:
 	go build ${LDFLAGS} -o ./bin/${BINARY}
 
-build_all:
+build-all:
 	$(foreach GOOS, $(PLATFORMS),\
 	$(foreach GOARCH, $(ARCHITECTURES), $(shell GOOS=$(GOOS) GOARCH=$(GOARCH) go build -v -o "./bin/$(BINARY)-$(GOOS)-$(GOARCH)")))
+
+build-docker:
+	docker build --force-rm -t ${BINARY}:${VERSION}-${BUILD} -t ${BINARY}:latest . 
