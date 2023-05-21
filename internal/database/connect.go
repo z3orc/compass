@@ -20,9 +20,8 @@ func Connect() *redis.Client {
 
 	var client *redis.Client = nil
 
-	redisUrl, err := redis.ParseURL(env.RedisURL())
-	fmt.Println("RedisURL" + env.RedisURL())
-	if err != nil {
+	redisUrl, err := redis.ParseURL(fmt.Sprint(env.RedisURL(), "3?dial_timeout=1&max_retries=-1"))
+	if err == nil {
 		client = redis.NewClient(redisUrl)
 	} else {
 		client = redis.NewClient(&redis.Options{
