@@ -13,14 +13,12 @@ var RedisCtx = context.Background()
 
 // Connects & returns a redis client
 func Connect() *redis.Client {
-	// url, err := redis.ParseURL("redis://localhost:6379")
-	// if err != nil {
-	// 	log.Println(err)
-	// }
+	const DIAL_TIMEOUT = 100 * time.Millisecond
+	const MAX_RETRIES = -1
 
 	var client *redis.Client = nil
 
-	redisUrl, err := redis.ParseURL(fmt.Sprint(env.RedisURL(), "?dial_timeout=100ms&max_retries=-1"))
+	redisUrl, err := redis.ParseURL(fmt.Sprint(env.RedisURL(), fmt.Sprintf("?dial_timeout=%s&max_retries=%d", DIAL_TIMEOUT, MAX_RETRIES)))
 	if err == nil {
 		client = redis.NewClient(redisUrl)
 	} else {
@@ -29,8 +27,8 @@ func Connect() *redis.Client {
 			Username:    env.RedisUser(),
 			Password:    env.RedisPassword(), // no password set
 			DB:          0,                   // use default DB
-			DialTimeout: 1 * time.Second,
-			MaxRetries:  -1,
+			DialTimeout: DIAL_TIMEOUT,
+			MaxRetries:  MAX_RETRIES,
 		})
 	}
 
