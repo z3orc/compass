@@ -50,13 +50,13 @@ func getFromDatabase(r *http.Request) (models.Version, error) {
 	identifier := fmt.Sprint(values[1], "-", values[2])
 
 	client := database.Connect()
+	defer client.Close()
+
 	val, err := client.HGetAll(database.RedisCtx, identifier).Result()
 	if err != nil {
 		// log.Print("| Could not fetch from database")
 		return models.Version{}, err
 	}
-
-	defer client.Close()
 
 	verified := verifyResult(val)
 	if verified {
