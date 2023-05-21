@@ -21,6 +21,7 @@ func Connect() *redis.Client {
 	var client *redis.Client = nil
 
 	redisUrl, err := redis.ParseURL(env.RedisURL())
+	fmt.Println("RedisURL" + env.RedisURL())
 	if err != nil {
 		client = redis.NewClient(redisUrl)
 	} else {
