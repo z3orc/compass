@@ -18,14 +18,21 @@ func Connect() *redis.Client {
 	// 	log.Println(err)
 	// }
 
-	client := redis.NewClient(&redis.Options{
-		Addr:        fmt.Sprint(env.RedisHost(), ":", env.RedisPort()),
-		Username:    env.RedisUser(),
-		Password:    env.RedisPassword(), // no password set
-		DB:          0,                   // use default DB
-		DialTimeout: 1 * time.Second,
-		MaxRetries:  -1,
-	})
+	var client *redis.Client = nil
+
+	redisUrl, err := redis.ParseURL(env.RedisURL())
+	if err != nil {
+		client = redis.NewClient(redisUrl)
+	} else {
+		client = redis.NewClient(&redis.Options{
+			Addr:        fmt.Sprint(env.RedisHost(), ":", env.RedisPort()),
+			Username:    env.RedisUser(),
+			Password:    env.RedisPassword(), // no password set
+			DB:          0,                   // use default DB
+			DialTimeout: 1 * time.Second,
+			MaxRetries:  -1,
+		})
+	}
 
 	return client
 }

@@ -17,6 +17,10 @@ func ListenerPort() string {
 	return ":8000"
 }
 
+func RedisURL() string {
+	return os.Getenv("REDIS_URL")
+}
+
 func RedisHost() string {
 	host := os.Getenv("REDISHOST")
 
