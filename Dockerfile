@@ -13,6 +13,7 @@ RUN make build
 # Config container
 FROM alpine:3.17
 WORKDIR /app
+RUN apk add --update redis
 COPY --from=build /app/bin/compass /app
 RUN chmod 0755 compass
 
