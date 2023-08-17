@@ -14,7 +14,7 @@ func ListenerPort() string {
 		return ":" + port
 	}
 
-	return ":8000"
+	return ":8080"
 }
 
 func RedisURL() string {
