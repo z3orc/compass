@@ -1,5 +1,5 @@
 BINARY=compass
-VERSION=3.0.1
+VERSION=3.1.0
 BUILD=`git rev-parse --short HEAD`
 PLATFORMS=darwin linux windows
 ARCHITECTURES=amd64 arm64
