@@ -1,4 +1,4 @@
-FROM golang:1.20-alpine3.17 AS build
+FROM golang:1.21-alpine3.18 AS build
 WORKDIR /app
 
 # Download Go modules
@@ -11,7 +11,7 @@ RUN apk add --no-cache make cmake git
 RUN make build
 
 # Config container
-FROM alpine:3.17
+FROM alpine:3.18
 WORKDIR /app
 RUN apk add --update redis
 COPY --from=build /app/bin/compass /app
