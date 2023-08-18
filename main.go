@@ -28,7 +28,7 @@ func main() {
 	router.Use(middleware.Recover)
 	router.Use(middleware.Logger)
 	router.Use(httprate.LimitByIP(
-		240,
+		90,
 		60*time.Second,
 	))
 
