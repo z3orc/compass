@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/jmoiron/sqlx"
+    _ "github.com/lib/pq"
 	"github.com/z3orc/compass/internal/env"
 )
 
