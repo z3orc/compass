@@ -15,25 +15,25 @@ func GetPostgressClient() *sqlx.DB {
         driver: PostgresDriver,
         user: env.PGUser(),
         dbname: env.PGDatabase(),
-        sslmode: SSLModeEnable,
+        sslmode: SSLModeDisable,
         password: env.PGPassword(),
         host: env.PGHost(),
     }
     
+    log.Printf("connect to postgress, with host: %s, user: %s, dbname: %s ", config.host, config.user, config.dbname)
     fmt.Println(config.asDataSource())
     db, err := sqlx.Connect(string(config.driver), config.asDataSource())
     if(err != nil){
         log.Fatalln(fmt.Sprint("error while connecting to database: ", err.Error()))
     }
 
-
     defer db.Close()
 
     if err := db.Ping(); err != nil {
-        log.Fatalln(fmt.Sprint("error while connecting to database: ", err.Error()))
+        log.Fatalln(fmt.Sprint("error while pinging database: ", err.Error()))
         return nil
     } else {
-        log.Println("Database connected")
+        log.Println("successfully connected to database")
         return db
     }
 }
