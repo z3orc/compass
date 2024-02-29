@@ -11,7 +11,7 @@ import (
 
 func GetPostgressClient() *sqlx.DB {
 
-    src := DatabaseConfig {
+    config := DatabaseConfig {
         driver: PostgresDriver,
         user: env.PGUser(),
         dbname: env.PGDatabase(),
@@ -20,10 +20,12 @@ func GetPostgressClient() *sqlx.DB {
         host: env.PGDatabase(),
     }
     
-    db, err := sqlx.Connect(string(src.driver), src.asDataSource())
+    db, err := sqlx.Connect(string(config.driver), config.asDataSource())
     if(err != nil){
         log.Fatalln(fmt.Sprint("error while connecting to database: ", err.Error()))
     }
+
+    fmt.Println(config.asDataSource())
 
     defer db.Close()
 
