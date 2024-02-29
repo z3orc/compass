@@ -2,10 +2,12 @@ package database
 
 import (
 	"fmt"
-	"log"
+	"os"
 
 	"github.com/jmoiron/sqlx"
-    _ "github.com/lib/pq"
+	_ "github.com/lib/pq"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"github.com/z3orc/compass/internal/env"
 )
 
@@ -19,21 +21,22 @@ func GetPostgressClient() *sqlx.DB {
         password: env.PGPassword(),
         host: env.PGHost(),
     }
-    
-    log.Printf("connect to postgress, with host: %s, user: %s, dbname: %s ", config.host, config.user, config.dbname)
-    fmt.Println(config.asDataSource())
+
+    log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+
+    log.Info().Msgf("connect to postgress, with host: %s, user: %s, dbname: %s ", config.host, config.user, config.dbname)
     db, err := sqlx.Connect(string(config.driver), config.asDataSource())
     if(err != nil){
-        log.Fatalln(fmt.Sprint("error while connecting to database: ", err.Error()))
+        log.Error().AnErr("failed to connect to database", err)
     }
 
     defer db.Close()
 
     if err := db.Ping(); err != nil {
-        log.Fatalln(fmt.Sprint("error while pinging database: ", err.Error()))
+        log.Error().AnErr("failed to ping database", err)
         return nil
     } else {
-        log.Println("successfully connected to database")
+        log.Info().Msg("successfully connected to database")
         return db
     }
 }
