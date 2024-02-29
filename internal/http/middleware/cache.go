@@ -49,7 +49,7 @@ func getFromDatabase(r *http.Request) (models.Version, error) {
 
 	identifier := fmt.Sprint(values[1], "-", values[2])
 
-	client := database.Connect()
+	client := database.GetCacheClient()
 	defer client.Close()
 
 	val, err := client.HGetAll(database.RedisCtx, identifier).Result()
@@ -83,7 +83,7 @@ func pushToDatabase(c *recorder.ResponseRecorder, r *http.Request) {
 
 		json.Unmarshal(c.Body, &version)
 
-		client := database.Connect()
+		client := database.GetCacheClient()
 		defer client.Close()
 		client.HSet(database.RedisCtx, identifier, "url", version.Url, "checksumtype", version.ChecksumType, "checksum", version.Checksum, "version", version.Version)
 		client.Expire(database.RedisCtx, identifier, 48*time.Hour)

@@ -12,7 +12,7 @@ import (
 var RedisCtx = context.Background()
 
 // Connects & returns a redis client
-func Connect() *redis.Client {
+func GetCacheClient() *redis.Client {
 	const DIAL_TIMEOUT = 100 * time.Millisecond
 	const MAX_RETRIES = -1
 
@@ -35,14 +35,3 @@ func Connect() *redis.Client {
 
 	return client
 }
-
-// // Check the state of a redis client
-// func Check(client *redis.Client) bool {
-// 	_, err := client.Ping(RedisCtx).Result()
-
-// 	if(err != nil){
-// 		return false
-// 	} else {
-// 		return true
-// 	}
-// }

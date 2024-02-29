@@ -66,3 +66,21 @@ func APIURL() string {
 
 	return url
 }
+
+func PGDatabase() string {
+    return os.Getenv("PGDATABASE")
+}
+
+func PGHost() string {
+    return os.Getenv("PGHOST")
+}
+
+func PGUser() string {
+    return os.Getenv("PGUSER")
+}
+
+func PGPassword() string {
+    return os.Getenv("PGPASSWORD")
+}
+
+
