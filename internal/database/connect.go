@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
-	"github.com/z3orc/dynamic-rpc/internal/env"
+	"github.com/z3orc/compass/internal/env"
 )
 
 var RedisCtx = context.Background()

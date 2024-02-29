@@ -4,7 +4,7 @@ BUILD=`git rev-parse --short HEAD`
 PLATFORMS=darwin linux windows
 ARCHITECTURES=amd64 arm64
 
-LDFLAGS=-ldflags "-X github.com/z3orc/dynamic-rpc/internal/env.Version=${VERSION} -X github.com/z3orc/dynamic-rpc/internal/env.Build=${BUILD}"
+LDFLAGS=-ldflags "-X github.com/z3orc/compass/internal/env.Version=${VERSION} -X github.com/z3orc/compass/internal/env.Build=${BUILD}"
 
 run:
 	go run ./cmd/server/server.go

@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/common-nighthawk/go-figure"
-	"github.com/z3orc/dynamic-rpc/internal/env"
+	"github.com/z3orc/compass/internal/env"
 )
 
 func Home(w http.ResponseWriter, r *http.Request) {

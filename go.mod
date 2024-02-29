@@ -1,4 +1,4 @@
-module github.com/z3orc/dynamic-rpc
+module github.com/z3orc/compass
 
 go 1.19
 

@@ -8,10 +8,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/z3orc/dynamic-rpc/internal/database"
-	"github.com/z3orc/dynamic-rpc/internal/http/recorder"
-	"github.com/z3orc/dynamic-rpc/internal/models"
-	"github.com/z3orc/dynamic-rpc/internal/util"
+	"github.com/z3orc/compass/internal/database"
+	"github.com/z3orc/compass/internal/http/recorder"
+	"github.com/z3orc/compass/internal/models"
+	"github.com/z3orc/compass/internal/util"
 )
 
 func Cache(next http.Handler) http.Handler {

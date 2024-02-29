@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/z3orc/dynamic-rpc/internal/models"
-	"github.com/z3orc/dynamic-rpc/internal/util"
+	"github.com/z3orc/compass/internal/models"
+	"github.com/z3orc/compass/internal/util"
 )
 
 const baseURL = "https://api.purpurmc.org/v2/purpur"

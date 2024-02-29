@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/z3orc/dynamic-rpc/internal/models"
+	"github.com/z3orc/compass/internal/models"
 )
 
 func GetJson(url string) ([]byte, error) {

@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/z3orc/dynamic-rpc/internal/client/purpur"
-	"github.com/z3orc/dynamic-rpc/internal/util"
+	"github.com/z3orc/compass/internal/client/purpur"
+	"github.com/z3orc/compass/internal/util"
 )
 
 func PurpurAsJson(w http.ResponseWriter, r *http.Request) {

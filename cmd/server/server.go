@@ -7,10 +7,10 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/httprate"
-	"github.com/z3orc/dynamic-rpc/internal/env"
-	"github.com/z3orc/dynamic-rpc/internal/http/middleware"
-	"github.com/z3orc/dynamic-rpc/internal/http/routes"
-	"github.com/z3orc/dynamic-rpc/internal/util"
+	"github.com/z3orc/compass/internal/env"
+	"github.com/z3orc/compass/internal/http/middleware"
+	"github.com/z3orc/compass/internal/http/routes"
+	"github.com/z3orc/compass/internal/util"
 )
 
 var port string = env.ListenerPort()

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/z3orc/dynamic-rpc/internal/http/recorder"
+	"github.com/z3orc/compass/internal/http/recorder"
 )
 
 func Logger(next http.Handler) http.Handler {

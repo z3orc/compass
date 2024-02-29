@@ -2,8 +2,8 @@ package routes
 
 import (
 	"github.com/go-chi/chi/v5"
-	"github.com/z3orc/dynamic-rpc/internal/http/handler"
-	"github.com/z3orc/dynamic-rpc/internal/http/middleware"
+	"github.com/z3orc/compass/internal/http/handler"
+	"github.com/z3orc/compass/internal/http/middleware"
 )
 
 func Init(router *chi.Mux) {
