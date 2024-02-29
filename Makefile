@@ -7,13 +7,19 @@ ARCHITECTURES=amd64 arm64
 LDFLAGS=-ldflags "-X github.com/z3orc/dynamic-rpc/internal/env.Version=${VERSION} -X github.com/z3orc/dynamic-rpc/internal/env.Build=${BUILD}"
 
 run:
-	go run main.go
+	go run ./cmd/server/server.go
+
+run_syncer:
+	go run ./cmd/syncer/syncer.go
 
 clean:
-	go mod tidy
+	go mod tidy && rm -rf ./bin/* && go clean
 
 build:
-	go build ${LDFLAGS} -o ./bin/${BINARY}
+	go build ${LDFLAGS} -o ./bin/${BINARY} ./cmd/server/server.go
+
+build_syncer:
+	go build ${LDFLAGS} -o ./bin/syncer ./cmd/syncer/syncer.go
 
 build-all:
 	$(foreach GOOS, $(PLATFORMS),\
