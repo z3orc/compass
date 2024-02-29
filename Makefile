@@ -13,10 +13,13 @@ run_syncer:
 	go run ./cmd/syncer/syncer.go
 
 clean:
-	go mod tidy
+	go mod tidy && rm -rf ./bin/* && go clean
 
 build:
 	go build ${LDFLAGS} -o ./bin/${BINARY} ./cmd/server/server.go
+
+build_syncer:
+	go build ${LDFLAGS} -o ./bin/syncer ./cmd/syncer/syncer.go
 
 build-all:
 	$(foreach GOOS, $(PLATFORMS),\
