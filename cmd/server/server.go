@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/httprate"
+	"github.com/z3orc/compass/internal/database"
 	"github.com/z3orc/compass/internal/env"
 	"github.com/z3orc/compass/internal/http/middleware"
 	"github.com/z3orc/compass/internal/http/routes"
@@ -35,7 +36,10 @@ func main() {
 	//Routes
 	routes.Init(router)
 
+    //Database
+    database.GetPostgressClient()
+
 	//Init listener
-	log.Print("| Server listening on ", port, " 🚀")
+	log.Println("| Server listening on ", port, " 🚀")
 	log.Fatal(http.ListenAndServe(port, router))
 }
