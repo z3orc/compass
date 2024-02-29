@@ -17,7 +17,7 @@ func GetPostgressClient() *sqlx.DB {
         dbname: env.PGDatabase(),
         sslmode: SSLModeEnable,
         password: env.PGPassword(),
-        host: env.PGDatabase(),
+        host: env.PGHost(),
     }
     
     fmt.Println(config.asDataSource())
