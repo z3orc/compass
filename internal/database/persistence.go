@@ -16,7 +16,7 @@ func GetPostgressClient() *sqlx.DB {
         driver: PostgresDriver,
         user: env.PGUser(),
         dbname: env.PGDatabase(),
-        sslmode: SSLModeDisable,
+        sslmode: SSLModeEnable,
         password: env.PGPassword(),
         host: env.PGHost(),
     }
