@@ -56,7 +56,7 @@ func (d *PistonDataSource) GetVersion(id string) (*model.Version, error) {
 	}
 
 	if info == nil {
-		return nil, &UnknownVersionIDError{}
+		return nil, &UnknownVersionError{}
 	}
 
 	metadata, err := d.fetchMetadata(info)

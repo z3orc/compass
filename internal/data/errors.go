@@ -6,8 +6,8 @@ func (m *MissingManifestError) Error() string {
 	return "unable to retrive manifest"
 }
 
-type UnknownVersionIDError struct{}
+type UnknownVersionError struct{}
 
-func (m *UnknownVersionIDError) Error() string {
+func (m *UnknownVersionError) Error() string {
 	return "no version found with given id"
 }
