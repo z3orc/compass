@@ -15,9 +15,9 @@ func main() {
 	log.SetLevel(log.DebugLevel)
 
 	e := echo.New()
+	e.Use(middleware.Secure())
 	e.Use(web.LoggerMiddleware())
 	e.Use(middleware.Recover())
-	e.Use(middleware.Secure())
 	// e.Use(middleware.HTTPSRedirect())
 
 	repo := repo.NewVersionRepository(data.NewPistonDataSource())
