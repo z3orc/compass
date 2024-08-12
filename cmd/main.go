@@ -22,17 +22,30 @@ func main() {
 
 	repo := repo.NewVersionRepository(data.NewPistonDataSource())
 
+	//Users can use either piston or vanilla to get vanilla jars
+	e.Pre(middleware.Rewrite(map[string]string{
+		"/vanilla/*": "/piston/$1",
+	}))
+
 	e.GET("/piston/:id", func(c echo.Context) error {
-		return pistonHandler(c, repo)
+		return versionHandler(c, repo, model.FlavourPiston)
+	})
+
+	e.GET("/paper/:id", func(c echo.Context) error {
+		return versionHandler(c, repo, model.FlavourPaper)
+	})
+
+	e.GET("/purpur/:id", func(c echo.Context) error {
+		return versionHandler(c, repo, model.FlavourPurpur)
 	})
 
 	log.Fatal(e.Start(":8000"))
 }
 
-func pistonHandler(c echo.Context, r repo.IVersionRepository) error {
+func versionHandler(c echo.Context, repo repo.IVersionRepository, flavour model.Flavour) error {
 	id := c.Param("id")
 
-	version, err := r.GetVersion(model.FlavourPiston, id)
+	version, err := repo.GetVersion(flavour, id)
 	if err != nil {
 		return c.JSON(int(err.StatusCode()), util.ErrorToJson(err))
 	}

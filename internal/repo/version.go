@@ -34,7 +34,12 @@ func NewVersionRepository(datasources ...data.IDataSource) *VersionRepository {
 }
 
 func (r *VersionRepository) GetVersion(flavour model.Flavour, id string) (*model.Version, data.DataError) {
-	src := r.datasources[flavour]
+
+	src, ok := r.datasources[flavour]
+	if !ok {
+		return nil, &InvalidFlavourError{}
+	}
+
 	version, err := src.GetVersion(id)
 	if err != nil {
 		return nil, err
