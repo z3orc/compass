@@ -11,6 +11,10 @@ func LoggerMiddleware() echo.MiddlewareFunc {
 		LogStatus: true,
 		LogURI:    true,
 		LogValuesFunc: func(c echo.Context, v middleware.RequestLoggerValues) error {
+			if v.URI == "/favicon.ico" {
+				return nil
+			}
+
 			log.Info("GET", "uri", v.URI, "status", v.Status)
 			return nil
 		},

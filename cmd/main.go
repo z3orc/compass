@@ -14,7 +14,12 @@ import (
 func main() {
 	log.SetLevel(log.DebugLevel)
 
+	log.Info("Starting COMPASS🧭")
+
 	e := echo.New()
+	e.HideBanner = true
+	e.HidePort = true
+
 	e.Use(middleware.Secure())
 	e.Use(web.LoggerMiddleware())
 	e.Use(middleware.Recover())
@@ -39,6 +44,7 @@ func main() {
 		return versionHandler(c, repo, model.FlavourPurpur)
 	})
 
+	log.Info("Running webserver on port 8000🚀")
 	log.Fatal(e.Start(":8000"))
 }
 

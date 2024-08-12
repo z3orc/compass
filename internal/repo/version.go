@@ -25,10 +25,10 @@ func NewVersionRepository(datasources ...data.IDataSource) *VersionRepository {
 		r.flavours = append(r.flavours, ds.GetFlavour())
 		r.datasources[ds.GetFlavour()] = ds
 
-		log.Debugf("Added flavour '%s' to VersionRepository", ds.GetFlavour().ToString())
+		log.Debug("Added datasource to VersionRepository", "flavour", ds.GetFlavour().ToString())
 	}
 
-	log.Info("Created VersionRepository", "flavours", r.flavours)
+	log.Info("Created VersionRepository", "datasource_count", len(r.datasources), "flavours", r.flavours)
 
 	return &r
 }
@@ -37,6 +37,7 @@ func (r *VersionRepository) GetVersion(flavour model.Flavour, id string) (*model
 
 	src, ok := r.datasources[flavour]
 	if !ok {
+		log.Error("Unknown flavour requested", "flavour_int", flavour, "flavour", flavour.ToString())
 		return nil, &InvalidFlavourError{}
 	}
 
