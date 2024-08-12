@@ -44,7 +44,7 @@ func NewPistonDataSource() *PistonDataSource {
 	}
 }
 
-func (d *PistonDataSource) GetVersion(id string) (*model.Version, error) {
+func (d *PistonDataSource) GetVersion(id string) (*model.Version, DataError) {
 	manifest, err := d.fetchManifest()
 	if err != nil {
 		log.Error("Unable to retrive manifest", "err", err)

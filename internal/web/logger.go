@@ -1,4 +1,4 @@
-package chttp //custom http
+package web
 
 import (
 	"github.com/charmbracelet/log"

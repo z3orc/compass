@@ -33,7 +33,7 @@ func NewVersionRepository(datasources ...data.IDataSource) *VersionRepository {
 	return &r
 }
 
-func (r *VersionRepository) GetVersion(flavour model.Flavour, id string) (*model.Version, error) {
+func (r *VersionRepository) GetVersion(flavour model.Flavour, id string) (*model.Version, data.DataError) {
 	src := r.datasources[flavour]
 	version, err := src.GetVersion(id)
 	if err != nil {

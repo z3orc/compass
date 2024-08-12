@@ -19,7 +19,7 @@ func GetJson(url string) ([]byte, error) {
 }
 
 type JsonError struct {
-	Error string `json:"error"`
+	Error string `json:"message"`
 }
 
 func ErrorToJson(err error) JsonError {
