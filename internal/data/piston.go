@@ -59,7 +59,7 @@ func (d *PistonDataSource) GetVersion(id string) (*model.Version, error) {
 	}
 
 	if info == nil {
-		log.Error("Unable to find version", "id", id, "err", err)
+		log.Error("Unable to find version", "id", id, "err", &UnknownVersionError{})
 		return nil, &UnknownVersionError{}
 	}
 

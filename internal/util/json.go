@@ -17,3 +17,14 @@ func GetJson(url string) ([]byte, error) {
 	body, err := io.ReadAll(resp.Body)
 	return body, err
 }
+
+type JsonError struct {
+	Error string `json:"error"`
+}
+
+func ErrorToJson(err error) JsonError {
+	return JsonError{
+		Error: err.Error(),
+	}
+
+}

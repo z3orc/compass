@@ -8,10 +8,10 @@ import (
 )
 
 type Version struct {
-	Flavour Flavour
-	Id      string
-	Url     string
-	Hash    string
+	Flavour Flavour `json:"flavour"`
+	Id      string  `json:"id"`
+	Url     string  `json:"url"`
+	Hash    string  `json:"hash"`
 }
 
 func (v Version) IsValid() error {
