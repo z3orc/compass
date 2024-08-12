@@ -5,6 +5,8 @@ import (
 
 	"github.com/charmbracelet/log"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	"github.com/z3orc/compass/internal/chttp"
 	"github.com/z3orc/compass/internal/data"
 	"github.com/z3orc/compass/internal/model"
 	"github.com/z3orc/compass/internal/repo"
@@ -15,6 +17,12 @@ func main() {
 	log.SetLevel(log.DebugLevel)
 
 	e := echo.New()
+
+	e.Use(chttp.LoggerMiddleware())
+	e.Use(middleware.Recover())
+	e.Use(middleware.Secure())
+	// e.Use(middleware.HTTPSRedirect())
+
 	e.GET("/piston/:id", pistonHandler)
 	log.Fatal(e.Start(":8000"))
 }
