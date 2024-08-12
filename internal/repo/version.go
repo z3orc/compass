@@ -12,6 +12,10 @@ type VersionRepository struct {
 }
 
 func NewVersionRepository(datasources ...data.IDataSource) *VersionRepository {
+	if len(datasources) <= 0 {
+		return nil
+	}
+
 	r := VersionRepository{
 		datasources: make(map[model.Flavour]data.IDataSource),
 		flavours:    make([]model.Flavour, 0),

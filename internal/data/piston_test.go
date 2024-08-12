@@ -11,7 +11,7 @@ func TestNewPistonDataSource(t *testing.T) {
 	src := NewPistonDataSource()
 
 	if src == nil {
-		t.Fatal("Expected *PistonDataSource but got nil")
+		t.Fatalf("Expected *PistonDataSource but got %v", src)
 	}
 
 	if !util.CheckUrl(src.url) {
@@ -40,7 +40,7 @@ func TestGetVersionInvalidVersion(t *testing.T) {
 
 	v, err := src.GetVersion("1.2112312")
 	if v != nil {
-		t.Fatalf("Expected nil pointer but got %v", v)
+		t.Fatalf("Expected nil pointer but got %T", v)
 	}
 
 	target := &UnknownVersionError{}
