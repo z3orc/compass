@@ -14,7 +14,7 @@ const (
 
 // ToFlavour converts a string to Flavour (int).
 // Returns an int of type Flavour, or -1 if input string is invalid
-func ToFlavour(s string) Flavour {
+func StringToFlavour(s string) Flavour {
 	s = strings.ToLower(s)
 
 	switch s {
@@ -27,6 +27,19 @@ func ToFlavour(s string) Flavour {
 	}
 
 	return -1
+}
+
+func (f Flavour) ToString() string {
+	switch f {
+	case FlavourPiston:
+		return "piston"
+	case FlavourPaper:
+		return "paper"
+	case FlavourPurpur:
+		return "purpur"
+	}
+
+	return ""
 }
 
 // Checks if the current Flavour is valid

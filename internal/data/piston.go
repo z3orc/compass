@@ -2,8 +2,8 @@ package data
 
 import (
 	"encoding/json"
-	"errors"
 
+	"github.com/charmbracelet/log"
 	"github.com/z3orc/compass/internal/model"
 	"github.com/z3orc/compass/internal/util"
 )
@@ -33,18 +33,21 @@ type versionDownloads struct {
 }
 
 type PistonDataSource struct {
-	url string
+	url     string
+	flavour model.Flavour
 }
 
 func NewPistonDataSource() *PistonDataSource {
 	return &PistonDataSource{
-		url: "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json",
+		url:     "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json",
+		flavour: model.FlavourPiston,
 	}
 }
 
 func (d *PistonDataSource) GetVersion(id string) (*model.Version, error) {
 	manifest, err := d.fetchManifest()
 	if err != nil {
+		log.Error("Unable to retrive manifest", "err", err)
 		return nil, &MissingManifestError{}
 	}
 
@@ -56,12 +59,14 @@ func (d *PistonDataSource) GetVersion(id string) (*model.Version, error) {
 	}
 
 	if info == nil {
+		log.Error("Unable to find version", "id", id, "err", err)
 		return nil, &UnknownVersionError{}
 	}
 
 	metadata, err := d.fetchMetadata(info)
 	if err != nil {
-		return nil, errors.New("unable to fetch metadata for version")
+		log.Error("Unable to retrieve metadata about version", "id", id, "err", err)
+		return nil, &MissingMetadataError{}
 	}
 
 	return &model.Version{
@@ -70,6 +75,10 @@ func (d *PistonDataSource) GetVersion(id string) (*model.Version, error) {
 		Url:     metadata.Downloads.Server.Url,
 		Hash:    metadata.Downloads.Server.Sha1,
 	}, nil
+}
+
+func (d *PistonDataSource) GetFlavour() model.Flavour {
+	return d.flavour
 }
 
 func (d *PistonDataSource) fetchManifest() (manifest, error) {
