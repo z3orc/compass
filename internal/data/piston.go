@@ -45,7 +45,7 @@ func NewPistonDataSource() *PistonDataSource {
 func (d *PistonDataSource) GetVersion(id string) (*model.Version, error) {
 	manifest, err := d.fetchManifest()
 	if err != nil {
-		return nil, errors.New("unable to fetch manifest")
+		return nil, &MissingManifestError{}
 	}
 
 	var info *versionInfo
@@ -56,7 +56,7 @@ func (d *PistonDataSource) GetVersion(id string) (*model.Version, error) {
 	}
 
 	if info == nil {
-		return nil, errors.New("unknown version")
+		return nil, &UnknownVersionIDError{}
 	}
 
 	metadata, err := d.fetchMetadata(info)
