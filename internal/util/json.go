@@ -9,8 +9,11 @@ import (
 func GetJson(url string) ([]byte, error) {
 	resp, err := http.Get(url)
 	if err != nil {
-		err = errors.New("503")
 		return nil, err
+	}
+
+	if resp.StatusCode != 200 {
+		return nil, errors.New("wrong status code")
 	}
 
 	defer resp.Body.Close()
