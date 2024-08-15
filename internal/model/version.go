@@ -3,6 +3,7 @@ package model
 import (
 	"encoding/json"
 	"errors"
+	"strconv"
 
 	"github.com/charmbracelet/log"
 	"github.com/z3orc/compass/internal/util"
@@ -31,8 +32,8 @@ func (v Version) IsValid() error {
 	}
 
 	//FIXME: SHA1 hash is 40 characters long. Need to be changed for other algorithms.
-	if len(v.Hash) == 40 {
-		return errors.New("invalid hash")
+	if len(v.Hash) != 40 {
+		return errors.New("invalid hash. supposed to be 40 characters long but was " + strconv.Itoa(len(v.Hash)))
 	}
 
 	return nil
