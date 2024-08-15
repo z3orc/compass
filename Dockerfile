@@ -16,4 +16,4 @@ WORKDIR /app
 COPY --from=build /app/build/compass /app
 RUN chmod 0755 compass
 
-CMD [ "./compass" ]
+CMD [ "./compass -https" ]
