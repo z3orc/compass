@@ -1,7 +1,7 @@
 BINARY=compass
 
 run:
-	go run ./cmd/main.go
+	go run ./cmd/main.go -debug -ratelimit 0
 
 test:
 	go test ./...
