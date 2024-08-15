@@ -7,7 +7,7 @@ func TestVersionIsValid(t *testing.T) {
 		Flavour: FlavourPaper,
 		Id:      "1.16.5",
 		Url:     "https://www.google.com",
-		Hash:    "b7a2f3a3f0a8d8c0e0d0c0b0a09080706050403020100",
+		Hash:    "d8321edc9470e56b8ad5c67bbd16beba25843336",
 	}
 
 	err := version.IsValid()
@@ -22,7 +22,7 @@ func TestVersionIsValid2(t *testing.T) {
 		Flavour: FlavourPaper,
 		Id:      "1.7",
 		Url:     "https://www.google.com",
-		Hash:    "b7a2f3a3f0a8d8c0e0d0c0b0a09080706050403020100",
+		Hash:    "90f9c80aeef3966343e661a1487b7918c90ae61d",
 	}
 
 	err := version.IsValid()
