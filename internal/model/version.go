@@ -2,7 +2,6 @@ package model
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/z3orc/compass/internal/util"
 )
@@ -19,16 +18,17 @@ func (v Version) IsValid() error {
 		return errors.New("invalid flavour")
 	}
 
-	if len(v.Id) < 3 || len(v.Id) > 7 {
-		fmt.Println(len(v.Id))
-		return errors.New("invalid id")
-	}
+	//Minecraft version IDs have been altered throughout the history of Minecraft. Probably not a good idea to check for exact length.
+	// if len(v.Id) < 3 || len(v.Id) > 7 {
+	// 	fmt.Println(len(v.Id))
+	// 	return errors.New("invalid id")
+	// }
 
 	if !util.CheckUrl(v.Url) {
 		return errors.New("invalid url")
 	}
 
-	if len(v.Hash) <= 0 {
+	if len(v.Hash) == 32 {
 		return errors.New("invalid hash")
 	}
 

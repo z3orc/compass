@@ -69,12 +69,16 @@ func (d *PistonDataSource) GetVersion(id string) (*model.Version, DataError) {
 		return nil, &MissingMetadataError{}
 	}
 
-	return &model.Version{
+	version := &model.Version{
 		Flavour: model.FlavourPiston,
 		Id:      info.Id,
 		Url:     metadata.Downloads.Server.Url,
 		Hash:    metadata.Downloads.Server.Sha1,
-	}, nil
+	}
+
+	log.Debug("Version from piston", "version", version)
+
+	return version, nil
 }
 
 func (d *PistonDataSource) GetFlavour() model.Flavour {
