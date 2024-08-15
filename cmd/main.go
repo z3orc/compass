@@ -1,6 +1,8 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/charmbracelet/log"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -56,5 +58,10 @@ func versionHandler(c echo.Context, repo repo.IVersionRepository, flavour model.
 		return c.JSON(int(err.StatusCode()), util.ErrorToJson(err))
 	}
 
-	return c.JSON(200, version)
+	versionJson, errJson := version.ToJson()
+	if errJson != nil {
+		return c.JSON(http.StatusInternalServerError, util.ErrorToJson(errJson))
+	}
+
+	return c.Blob(200, "application/json", versionJson)
 }

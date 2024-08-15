@@ -29,5 +29,4 @@ func ErrorToJson(err error) JsonError {
 	return JsonError{
 		Error: err.Error(),
 	}
-
 }

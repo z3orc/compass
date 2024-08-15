@@ -1,8 +1,10 @@
 package model
 
 import (
+	"encoding/json"
 	"errors"
 
+	"github.com/charmbracelet/log"
 	"github.com/z3orc/compass/internal/util"
 )
 
@@ -28,9 +30,32 @@ func (v Version) IsValid() error {
 		return errors.New("invalid url")
 	}
 
-	if len(v.Hash) == 32 {
+	//FIXME: SHA1 hash is 40 characters long. Need to be changed for other algorithms.
+	if len(v.Hash) == 40 {
 		return errors.New("invalid hash")
 	}
 
 	return nil
+}
+
+func (v Version) ToJson() ([]byte, error) {
+	res, err := json.Marshal(
+		struct {
+			Flavour string `json:"flavour"`
+			Id      string `json:"id"`
+			Url     string `json:"url"`
+			Hash    string `json:"hash"`
+		}{
+			Flavour: v.Flavour.ToString(),
+			Id:      v.Id,
+			Url:     v.Url,
+			Hash:    v.Hash,
+		},
+	)
+	if err != nil {
+		log.Error("Failed to marshal version to json", "version", v, "error", err)
+		return nil, err
+	}
+
+	return res, nil
 }
