@@ -13,7 +13,7 @@ RUN make build
 # Config container
 FROM alpine:3.20
 WORKDIR /app
-COPY --from=build /app/build/compass /app
+COPY --from=build /app/bin/compass /app
 RUN chmod 0755 compass
 
 CMD [ "./compass" ]
