@@ -1,4 +1,4 @@
-package util
+package middleware
 
 import (
 	"github.com/charmbracelet/log"
@@ -6,7 +6,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func LoggerMiddleware() echo.MiddlewareFunc {
+func loggerMiddleware() echo.MiddlewareFunc {
 	return middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
 		LogStatus: true,
 		LogURI:    true,

@@ -1,4 +1,4 @@
-package handler
+package routes
 
 import (
 	"net/http"
@@ -9,19 +9,6 @@ import (
 	"github.com/z3orc/compass/internal/repo"
 	"github.com/z3orc/compass/internal/util"
 )
-
-func HomeHandler(c echo.Context) error {
-	content := []byte(`
-	Welcome to COMPASS! Compass is here to help you fetch whichever version 
-	of the Minecraft Server Jar you would like, both from a browser and 
-	from the command-line! It current only supports server jars from mojang,
-	but support for other sources will be added in the future! The only thing 
-	that remain now is giving it a try!
-	
-	Usage: .../{flavour}/{version}, e.g. /piston/1.21 for vanilla 1.21`)
-
-	return c.Blob(http.StatusOK, "text/plain", content)
-}
 
 func VersionHandler(c echo.Context, repo repo.IVersionRepository, flavour model.Flavour) error {
 	id := c.Param("id")
@@ -37,5 +24,5 @@ func VersionHandler(c echo.Context, repo repo.IVersionRepository, flavour model.
 		return c.JSON(http.StatusInternalServerError, util.ErrorToJson(errJson))
 	}
 
-	return c.Blob(200, "application/json", versionJson)
+	return c.JSONBlob(200, versionJson)
 }
