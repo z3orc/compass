@@ -6,10 +6,10 @@ import (
 
 	"github.com/charmbracelet/log"
 	"github.com/z3orc/compass/internal/data"
+	"github.com/z3orc/compass/internal/http"
+	"github.com/z3orc/compass/internal/http/middleware"
+	"github.com/z3orc/compass/internal/http/routes"
 	"github.com/z3orc/compass/internal/repo"
-	"github.com/z3orc/compass/internal/web/http"
-	"github.com/z3orc/compass/internal/web/middleware"
-	"github.com/z3orc/compass/internal/web/routes"
 )
 
 var port int
