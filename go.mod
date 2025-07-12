@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/common-nighthawk/go-figure v0.0.0-20210622060536-734e95fb86be
-	github.com/go-chi/chi/v5 v5.0.8
+	github.com/go-chi/chi/v5 v5.2.2
 	github.com/go-chi/httprate v0.7.4
 	github.com/go-redis/redis/v8 v8.11.5
 )
